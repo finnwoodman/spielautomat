@@ -12,10 +12,12 @@ class AgeSelector
     void refresh();
     int getCat(int _value);
     void setThreshold(int _buffer);
-
+    int steps[7];
+    int ages[6];
 
   private:
     int buffer;
+    boolean adapt;
     int pin1;
     int pin2;
     int value1;
@@ -24,9 +26,7 @@ class AgeSelector
     int ovalue2;
     int min;
     int max;
-    boolean adapt;
-    int steps[];
-    int ages[];
+
 
 
   protected:

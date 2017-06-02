@@ -18,37 +18,33 @@ AgeSelector::AgeSelector(int _pin1, int _pin2)
 }
 
 void AgeSelector::refresh(){
-  
+
   ovalue1 = value1;
   ovalue2 = value2;
   value1 = analogRead(pin1);
   value2 = analogRead(pin2);
   if ((ovalue1 <= (value1 - buffer)) || (ovalue1 >= (value1 + buffer))){
-    Serial.print("Value1: ");
-    Serial.println(value1);
-    Serial.print("oValue1: ");
-    Serial.println(value1);
-    Serial.print("oValue1 - buffer: ");
-    Serial.println(value1 - buffer);
-    Serial.print("oValue1 + buffer: ");
-    Serial.println(value1 + buffer);
-    Serial.print("buffer: ");
-    Serial.println(buffer);
     if (adapt == false){
       min = value1;
     }
     else {
-      Serial.println(getCat(value1));
+      min = getCat(value1);
     }
   }
-  if (ovalue2 != value2){
+  if ((ovalue2 <= (value2 - buffer)) || (ovalue2 >= (value2 + buffer))){
     if (adapt == false){
       max = value2;
     }
     else {
-      //Serial.println(getCat(value2));
+      max = getCat(value2);
     }
   }
+  if (min > max){
+    int _tmp = max;
+    max = min;
+    min = _tmp;
+  }
+
 }
 
 void AgeSelector::setSteps(int _min, int _step1,int _step2, int _step3, int _step4, int _step5, int _max){
@@ -68,18 +64,19 @@ void AgeSelector::setAges(int _age1, int _age2, int _age3, int _age4, int _age5)
   ages[2] = _age2;
   ages[3] = _age3;
   ages[4] = _age4;
-  ages[5] = _age4;
+  ages[5] = _age5;
   //ages[6] = 99;
 }
 
 
 
 int AgeSelector::getCat(int _value){
-  int _age;
-  for (int i = 1; i < sizeof(steps); i++) {
-    if ((_value > steps[i-1]) && (_value < steps[i])){
+  int _age = 0;
+  for (int i = 1; i < (sizeof(steps)/sizeof(int)); i++) {
+    if (_value > steps[i-1]){
       _age = ages[i-1];
     }
+    else break;
   }
   return _age;
 }
