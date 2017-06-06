@@ -12,6 +12,7 @@ class Voltmeter
     void set(int _pos, long _interval);
     void refresh();
     int getPosition();
+    void report(boolean _debug);
   ;
 
 
@@ -23,6 +24,7 @@ class Voltmeter
   protected:
     unsigned long interval;
     unsigned long oTime;
+    boolean debug;
 
 };
 

@@ -9,21 +9,33 @@ Voltmeter::Voltmeter(int _pin1)
   pin1 = _pin1;
   pos = 0;
   interval= 0;
+  debug = true;
   pinMode(_pin1, OUTPUT);
 }
 
 int Voltmeter::getPosition(){
   return pos;
+  if (debug == true) {
+    Serial.print ("VOLTMETER ::: getPosition()");
+    Serial.println (pos);
+  }
 }
 
 void Voltmeter::reset(){
   change = true;
   pos = 0;
+  if (debug == true) {
+    Serial.println ("VOLTMETER ::: reset()");
+  }
 }
 
 void Voltmeter::set(int _pos){
   change = true;
   pos = _pos;
+  if (debug == true) {
+    Serial.print("VOLTMETER ::: set() ");
+    Serial.println(pos);
+  }
 }
 
 void Voltmeter::set(int _pos, long _interval){
@@ -31,6 +43,12 @@ void Voltmeter::set(int _pos, long _interval){
   interval= _interval;
   o_pos = pos;
   pos = _pos;
+  if (debug == true) {
+    Serial.print("VOLTMETER ::: set() ");
+    Serial.print(pos);
+    Serial.print(" POS and ITV ");
+    Serial.println(interval);
+  }
 }
 
 void Voltmeter::refresh(){
@@ -56,5 +74,15 @@ void Voltmeter::refresh(){
     }
     oTime = millis();
     }
+    if (debug == true) {
+      Serial.println("VOLTMETER ::: refresh() ");
+    }
+}
+}
+
+void Voltmeter::report(boolean _debug){
+  if (!Serial){
+    Serial.begin(9600);
   }
+  debug = _debug;
 }

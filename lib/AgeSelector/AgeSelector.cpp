@@ -14,6 +14,7 @@ AgeSelector::AgeSelector(int _pin1, int _pin2)
   value2 = analogRead(pin2);
   adapt = false;
   buffer = 5;
+  debug = false;
 
 }
 
@@ -83,4 +84,11 @@ int AgeSelector::getCat(int _value){
 
 void AgeSelector::setThreshold(int _buffer){
   buffer = _buffer;
+}
+
+void AgeSelector::report(boolean _debug){
+  if (!Serial){
+    Serial.begin(9600);
+  }
+  debug = _debug;
 }
