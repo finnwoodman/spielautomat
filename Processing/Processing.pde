@@ -2,9 +2,12 @@
 // This is NOT an Arduino sketch.  Runs in Processing IDE (www.processing.org)
 // Based on http://github.com/adafruit/Adafruit-Thermal-Printer-Library/blob/master/processing/bitmapImageConvert.pde
 // Adapted for binary output by http://github.com/kabrio
-
+String filenameCsv;
+Table table;
+String[] imgNames;
 
 void setup() {
+  table = new Table();
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
@@ -13,10 +16,18 @@ void folderSelected(File selection) {
     println("Window was closed or the user hit cancel.");
   } else {
     println("User selected " + selection.getAbsolutePath());
-   /* filenameCsv = selection.getAbsolutePath()+"/spielomat.csv";
+    filenameCsv = selection.getAbsolutePath()+"/spielomat.csv";
     table = loadTable(filenameCsv, "header");
-    table.addColumn("Height");
-    table.addColumn("Width");*/
+    if (table!=null){
+      println("Loaded table successfully");
+    }
+  }
+
+  imgNames = new String[table.getRowCount()];
+
+  for (int i = 0; i < imgNames.length; i++) {
+    imgNames[i] = table.getString(i,"Datei");
+    //imgNames[i]+=".jpg";
   }
 
   File[] files = listFiles(selection);
@@ -27,7 +38,7 @@ for (int i = 0; i < files.length; i++) {
     println("#" + i + " Name: " + f.getName());
     println("-----------------------");
   }
- //  saveTable(table, filenameCsv);
+   saveTable(table, filenameCsv);
 }
 
 File[] listFiles(String dir) {
@@ -51,6 +62,7 @@ void processImage(File image){  // Select and load image
   println("Loading image...");
   filename = image.getPath();
   img      = loadImage(image.getPath());
+
   if (img!=null){
   // Morph filename into output filename and base name for data
   x = filename.lastIndexOf('.');
@@ -58,6 +70,14 @@ void processImage(File image){  // Select and load image
   x = filename.lastIndexOf('/');
   if (x > 0) basename = filename.substring(x + 1); // Strip path
   else      basename = filename;
+  print(basename);
+  for (int j = 0; j < imgNames.length; j++) {
+
+      if (imgNames[j].equals(basename)==true){
+          table.setInt(j, "Height", img.height);
+          table.setInt(j, "Width", img.width);
+            }
+  }
 
   filenameBin = filename+".bin";
   println("Writing output to " + filenameBin);
