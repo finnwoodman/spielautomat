@@ -1,56 +1,82 @@
-// Convert image to a binary header file suitable for opening from SD and print with the Adafruit_Thermal library.
-// This is NOT an Arduino sketch.  Runs in Processing IDE (www.processing.org)
-// Based on http://github.com/adafruit/Adafruit-Thermal-Printer-Library/blob/master/processing/bitmapImageConvert.pde
-// Adapted for binary output by http://github.com/kabrio
+//ImageProcessor to convert a set of images (*.jpg,bmp, png) to *bin
+//Has some extra functionalities regarding as specific *.csv in
+//our project but will work with every folder.
+
+//Image proceeding based on work of https://github.com/treipatru/PhotoMetron
+//File listing based on work of Daniel Shiffman.
+//Thanks!
+
+//(C) RaktiPiepEkti 2017 - Max von Elverfeldt
+
 String filenameCsv;
 Table table;
 String[] imgNames;
+boolean csv;
+
 
 void setup() {
   table = new Table();
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
+//Select folder with images and either "spielomat.csv" or not.
 void folderSelected(File selection) {
+
   if (selection == null) {
     println("Window was closed or the user hit cancel.");
   } else {
     println("User selected " + selection.getAbsolutePath());
     filenameCsv = selection.getAbsolutePath()+"/spielomat.csv";
+
+  //Try to load table and ignore subsequently if none is available.
     table = loadTable(filenameCsv, "header");
     if (table!=null){
       println("Loaded table successfully");
+      csv = true;
+    }
+    else {
+      csv = false;
     }
   }
 
-  imgNames = new String[table.getRowCount()];
 
+  //If *.csv is available grab filenames.
+  if (csv==true){
+  imgNames = new String[table.getRowCount()];
   for (int i = 0; i < imgNames.length; i++) {
     imgNames[i] = table.getString(i,"Datei");
     //imgNames[i]+=".jpg";
   }
+  }
 
+  //Write files in folder to array of files.
   File[] files = listFiles(selection);
 
+  //Repeat processImage(_file) for every file in array.
 for (int i = 0; i < files.length; i++) {
     File f = files[i];
     processImage(f);
     println("#" + i + " Name: " + f.getName());
     println("-----------------------");
   }
+
+  //Naturally save table finally, if used before.
+   if (csv==true){
    saveTable(table, filenameCsv);
+ }
 }
 
+//Return array with files.
 File[] listFiles(String dir) {
   File file = new File(dir);
   if (file.isDirectory()) {
     File[] files = file.listFiles();
     return files;
   } else {
-    // If it's not a directory
     return null;
   }
 }
+
 
 void processImage(File image){  // Select and load image
   String      filename, basename, filenameBin;
@@ -71,6 +97,7 @@ void processImage(File image){  // Select and load image
   if (x > 0) basename = filename.substring(x + 1); // Strip path
   else      basename = filename;
   print(basename);
+  if (csv==true){
   for (int j = 0; j < imgNames.length; j++) {
 
       if (imgNames[j].equals(basename)==true){
@@ -78,6 +105,7 @@ void processImage(File image){  // Select and load image
           table.setInt(j, "Width", img.width);
             }
   }
+}
 
   filenameBin = filename+".bin";
   println("Writing output to " + filenameBin);
