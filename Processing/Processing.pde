@@ -1,13 +1,10 @@
-Table table;
-String      filename, basename, filenameBin, filenameCsv;
-PImage      img;
-PrintWriter output;
-int         i, x, y, b, rowBytes, totalBytes, lastBit, sum, n, r=1;
-byte[] data;
-int byteIndex = 0;
+// Convert image to a binary header file suitable for opening from SD and print with the Adafruit_Thermal library.
+// This is NOT an Arduino sketch.  Runs in Processing IDE (www.processing.org)
+// Based on http://github.com/adafruit/Adafruit-Thermal-Printer-Library/blob/master/processing/bitmapImageConvert.pde
+// Adapted for binary output by http://github.com/kabrio
+
 
 void setup() {
-
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
@@ -16,10 +13,10 @@ void folderSelected(File selection) {
     println("Window was closed or the user hit cancel.");
   } else {
     println("User selected " + selection.getAbsolutePath());
-    filenameCsv = selection.getAbsolutePath()+"/spielomat.csv";
+   /* filenameCsv = selection.getAbsolutePath()+"/spielomat.csv";
     table = loadTable(filenameCsv, "header");
     table.addColumn("Height");
-    table.addColumn("Width");
+    table.addColumn("Width");*/
   }
 
   File[] files = listFiles(selection);
@@ -30,11 +27,8 @@ for (int i = 0; i < files.length; i++) {
     println("#" + i + " Name: " + f.getName());
     println("-----------------------");
   }
-   saveTable(table, filenameCsv);
+ //  saveTable(table, filenameCsv);
 }
-
-// This function returns all the files in a directory as an array of File objects
-// This is useful if you want more info about the file
 
 File[] listFiles(String dir) {
   File file = new File(dir);
@@ -47,20 +41,17 @@ File[] listFiles(String dir) {
   }
 }
 
-void processImage(File image){
- // Select and load image
+void processImage(File image){  // Select and load image
+  String      filename, basename, filenameBin;
+  PImage      img;
+  PrintWriter output;
+  int         i, x, y, b, rowBytes, totalBytes, lastBit, sum, n, r=1;
+  byte[] data;
+  int byteIndex = 0;
   println("Loading image...");
   filename = image.getPath();
   img      = loadImage(image.getPath());
-if (img != null) {
-  image(img, 0, 0); // you actually selected an image
-
-  TableRow newRow = table.addRow();
-  newRow.setInt("Height", img.height);
-  newRow.setInt("Width", img.width);
-
-
-
+  if (img!=null){
   // Morph filename into output filename and base name for data
   x = filename.lastIndexOf('.');
   if (x > 0) filename = filename.substring(0, x);  // Strip current extension
@@ -104,9 +95,10 @@ if (img != null) {
 
   // save byte array as binary file
   saveBytes(filenameBin, data);
-
   println("Done!");
-  } else {
+}
+else {
   println("no image loaded"); // the file selected was not an image that could be loaded
 }
+
 }
