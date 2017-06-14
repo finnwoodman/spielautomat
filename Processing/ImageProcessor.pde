@@ -1,9 +1,13 @@
 Table table;
+String      filename, basename, filenameBin, filenameCsv;
+PImage      img;
+PrintWriter output;
+int         i, x, y, b, rowBytes, totalBytes, lastBit, sum, n, r=1;
+byte[] data;
+int byteIndex = 0;
 
 void setup() {
-  table = new Table();
-  table.addColumn("Height");
-  table.addColumn("Width");
+
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
@@ -12,7 +16,12 @@ void folderSelected(File selection) {
     println("Window was closed or the user hit cancel.");
   } else {
     println("User selected " + selection.getAbsolutePath());
+    filenameCsv = selection.getAbsolutePath()+"/spielomat.csv";
+    table = loadTable(filenameCsv, "header");
+    table.addColumn("Height");
+    table.addColumn("Width");
   }
+
   File[] files = listFiles(selection);
 
 for (int i = 0; i < files.length; i++) {
@@ -21,6 +30,7 @@ for (int i = 0; i < files.length; i++) {
     println("#" + i + " Name: " + f.getName());
     println("-----------------------");
   }
+   saveTable(table, filenameCsv);
 }
 
 // This function returns all the files in a directory as an array of File objects
@@ -38,18 +48,12 @@ File[] listFiles(String dir) {
 }
 
 void processImage(File image){
-
-  String      filename, basename, filenameBin, filenameCsv;
-  PImage      img;
-  PrintWriter output;
-  int         i, x, y, b, rowBytes, totalBytes, lastBit, sum, n, r=1;
-  byte[] data;
-  int byteIndex = 0;
-
-  // Select and load image
+ // Select and load image
   println("Loading image...");
   filename = image.getPath();
   img      = loadImage(image.getPath());
+if (img != null) {
+  image(img, 0, 0); // you actually selected an image
 
   TableRow newRow = table.addRow();
   newRow.setInt("Height", img.height);
@@ -64,11 +68,7 @@ void processImage(File image){
   if (x > 0) basename = filename.substring(x + 1); // Strip path
   else      basename = filename;
 
-  filenameCsv = filename+".csv";
-  saveTable(table, filenameCsv);
-  table.removeRow(0);  // Removes the first row
   filenameBin = filename+".bin";
-
   println("Writing output to " + filenameBin);
 
   // Calculate output size
@@ -106,4 +106,7 @@ void processImage(File image){
   saveBytes(filenameBin, data);
 
   println("Done!");
+  } else {
+  println("no image loaded"); // the file selected was not an image that could be loaded
+}
 }
