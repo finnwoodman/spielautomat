@@ -4,6 +4,8 @@
 //Class AgeSelector
 //Max von Elverfeldt - RaktiPiepEkti - 2017
 
+//Comment: E(Blue or/and White) = GND, IN(Yellow, White) = VIN, OUT(Blue, Yellow) = A8, A9
+
 AgeSelector::AgeSelector(int _pin1, int _pin2)
 {
   pinMode(_pin1, INPUT);
@@ -15,11 +17,9 @@ AgeSelector::AgeSelector(int _pin1, int _pin2)
   adapt = false;
   buffer = 5;
   debug = false;
-
 }
 
 void AgeSelector::refresh(){
-
   ovalue1 = value1;
   ovalue2 = value2;
   value1 = analogRead(pin1);
@@ -31,6 +31,10 @@ void AgeSelector::refresh(){
     else {
       min = getCat(value1);
     }
+    if (debug == true){
+      Serial.print("AgeSelector::newMin():Cateogory:");
+      Serial.println(min);
+    }
   }
   if ((ovalue2 <= (value2 - buffer)) || (ovalue2 >= (value2 + buffer))){
     if (adapt == false){
@@ -39,12 +43,18 @@ void AgeSelector::refresh(){
     else {
       max = getCat(value2);
     }
+    if (debug == true){
+      Serial.print("AgeSelector::newMax():Category:");
+      Serial.println(max);
+    }
   }
   if (min > max){
     int _tmp = max;
     max = min;
     min = _tmp;
   }
+  Serial.println(value1);
+  Serial.println(value2);
 
 }
 
@@ -57,6 +67,11 @@ void AgeSelector::setSteps(int _min, int _step1,int _step2, int _step3, int _ste
     steps[4] = _step4;
     steps[5] = _step5;
     steps[6] = _max;
+    if (debug == true){
+      for (int i = 0; i < sizeof(ages); i++) {
+        Serial.println(steps[i]);    /* code */
+      }
+    }
 }
 
 void AgeSelector::setAges(int _age1, int _age2, int _age3, int _age4, int _age5){
@@ -66,6 +81,12 @@ void AgeSelector::setAges(int _age1, int _age2, int _age3, int _age4, int _age5)
   ages[3] = _age3;
   ages[4] = _age4;
   ages[5] = _age5;
+  if (debug == true){
+    Serial.println("AgeSelector::setAges():");
+    for (int i = 0; i < sizeof(ages); i++) {
+      Serial.println(ages[i]);    /* code */
+    }
+  }
   //ages[6] = 99;
 }
 
@@ -84,6 +105,11 @@ int AgeSelector::getCat(int _value){
 
 void AgeSelector::setThreshold(int _buffer){
   buffer = _buffer;
+  if (debug == true){
+    Serial.print("AgeSelector::setThreshold(");
+    Serial.print(_buffer);
+    Serial.println(")");
+  }
 }
 
 void AgeSelector::report(boolean _debug){
