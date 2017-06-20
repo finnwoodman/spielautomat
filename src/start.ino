@@ -5,11 +5,16 @@
 #include <Voltmeter.h>
 #include <AgeSelector.h>
 #include <CoinAcceptor.h>
+#include <RotarySwitch.h>
 
  //Rotary rotary(0,1);
  //ArcadeCollector arcadeBus(2);
- //Voltmeter vMeter(2);
- AgeSelector Age(A9, A8);
+// Voltmeter vMeter(2);
+int selectorPin;
+int numOfSteps;
+float divider;
+RotarySwitch rSwitch(A9, 10);
+ //AgeSelector Age(A9, A8);
  //CoinAcceptor Coin;
 //Arcade Button(0,1);
 
@@ -18,6 +23,7 @@
  }*/
 
  void setup() {
+ rSwitch.report(true);
  /*arcadeBus.add(0, 1);
  arcadeBus.report(true);
  arcadeBus.setBlink(100, 10);*/
@@ -25,12 +31,13 @@
  //rotary.autoDecrease(2000);
  //rotary.report(true);
 
- //delay(5000);
+ delay(5000);
  //vMeter.set(100);
- Age.setThreshold(5);
+
+ /*Age.setThreshold(5);
  Age.setSteps(0 , 200 , 400, 600, 800, 900, 1023);
  Age.setAges(3 , 5, 8, 12, 16);
- Age.report(true);
+ Age.report(true);*/
 
  //Coin.report(true);
  //Coin.setInterval(200);
@@ -42,8 +49,15 @@
 
 
 void loop(){
-  Age.refresh();
-  delay(250);
+rSwitch.refresh();
+delay(500);
+//  Age.refresh();
+//  vMeter.set(100);
+//  vMeter.refresh();
+//  delay(1000);
+//  vMeter.set(255);
+//  vMeter.refresh();
+//  delay(1000);
 //rotary.refresh();
 //Button.refresh();
 }
