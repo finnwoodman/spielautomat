@@ -6,6 +6,7 @@
 #include <AgeSelector.h>
 #include <CoinAcceptor.h>
 #include <RotarySwitch.h>
+#include <SolSound.h>
 
  //Rotary rotary(0,1);
  //ArcadeCollector arcadeBus(2);
@@ -14,6 +15,7 @@ int selectorPin;
 int numOfSteps;
 float divider;
 RotarySwitch rSwitch(A9, 10);
+SolSound SolSound(1,2);
  //AgeSelector Age(A9, A8);
  //CoinAcceptor Coin;
 //Arcade Button(0,1);
