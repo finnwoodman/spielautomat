@@ -28,8 +28,7 @@ class RotarySwitch
    *  @return The current position (step) of the rotary switch.
    *  @see _steps
    */
-    int getPosition()
-  ;
+    int getPosition();
 
 
   private:
