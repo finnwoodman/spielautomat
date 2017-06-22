@@ -25,9 +25,7 @@ SolSound SolSound(0);
  }*/
 
  void setup() {
-SolSound.bell();
-SolSound.bell();
-SolSound.bell();
+SolSound.sequence(10, 1000);
  //rSwitch.report(true);
  /*arcadeBus.add(0, 1);
  arcadeBus.report(true);

@@ -2,92 +2,106 @@
 #include "Arduino.h"
 
 /**
- SolSound class
- SolSound.cpp
- Purpose: Drive a solenoid for bell strokes and sequences of those.
+SolSound class
+SolSound.cpp
+Purpose: Drive a solenoid for bell strokes and sequences of those.
 
- @author Max von Elverfeldt f. RaktiPiepEkti
- @version 0.2 22/06/17
- */
+@author Max von Elverfeldt f. RaktiPiepEkti
+@version 0.2 22/06/17
+*/
 
 
 /**
- * Constructor of object SolSound including both pins on board.
- */
+* Constructor of object SolSound including both pins on board.
+*/
 
 SolSound::SolSound(int _pin){
-    pin = _pin;
+  pin = _pin;
 
-    pinMode(pin, OUTPUT);
+  pinMode(pin, OUTPUT);
 
-    stroke = 100;
-    oStroke = stroke;
+  stroke = 100;
+  oStroke = stroke;
 
-    duration = 1000;
-    oDuration = duration;
+  duration = 1000;
+  oDuration = duration;
 
-    timer = millis();
-    pause = millis();
+  timer = millis();
+  pause = millis();
 
-    repetitions = 0;
-    oRepetitions = 0;
+  repetitions = 0;
+  oRepetitions = 0;
 
 }
 
 /**
- * Trigger single bell stroke.
- */
+* Trigger single bell stroke.
+*/
 void SolSound::bell(){
   repetitions++;
   oRepetitions++;
 }
 
-void SolSound::refresh(){
 
-if((millis() - pause) > duration){
+void SolSound::refresh(){
+  if((millis() - pause) > duration){
     if ((millis() - timer) > stroke){
-        if ((repetitions > 0) && (repetitions == oRepetitions)) {
+      if ((repetitions > 0) && (repetitions == oRepetitions)) {
         repetitions--;
         down();
         timer = millis();
       }
     }
-        if ((millis() - timer) > stroke){
-          if (repetitions != oRepetitions) {
-          up();
-          oRepetitions = repetitions;
-          pause = millis();
-        }
+    if ((millis() - timer) > stroke){
+      if (repetitions != oRepetitions) {
+        up();
+        oRepetitions = repetitions;
+        pause = millis();
       }
-}
+    }
+    if ((repetitions == 0) && (oRepetitions == 0)){
+      duration = oDuration;
+    }
+  }
 }
 /**
- * Disable solenoid.
- */
+* Play a defined number of strokes with dedicated pause.
+* @param _rep Number of repetitions.
+* @param _dur Pause between bell strokes.
+*/
+void SolSound::sequence(int _rep, long _dur){
+  repetitions = _rep;
+  oRepetitions = repetitions;
+  oDuration = duration;
+  duration = _dur;
+}
+/**
+* Disable solenoid.
+*/
 void SolSound::up(){
-    digitalWrite(pin, LOW);
+  digitalWrite(pin, LOW);
 }
 /**
- * Enable solenoid.
- */
+* Enable solenoid.
+*/
 void SolSound::down(){
   digitalWrite(pin, HIGH);
 }
 
 /**
- * Adjust bell stroke stroke manually.
- * @param _stroke stroke in ms.
- */
+* Adjust bell stroke stroke manually.
+* @param _stroke stroke in ms.
+*/
 void SolSound::adjust(long _stroke){
   oStroke = stroke;
   stroke = _stroke;
 }
 
 /**
- * Adjustr bell stroke and min. pause inbetween manually.
- * @param _stroke   stroke in ms.
- * @param _duration min. pause in ms.
- */
+* Adjustr bell stroke and min. pause inbetween manually.
+* @param _stroke   stroke in ms.
+* @param _duration min. pause in ms.
+*/
 void SolSound::adjust(long _stroke, long _duration){
   oStroke = stroke;
   stroke = _stroke;

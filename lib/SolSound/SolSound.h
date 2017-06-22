@@ -40,12 +40,12 @@ class SolSound
     void refresh();
     /**
      * Play a simple sequence
-     * @param _rep Define the number of repititions.
+     * @param _rep Define the number of repetitions.
      * @param _dur Define the pause inbetween.
      */
     void sequence(int _rep, long _dur);
 
-    void melody(int* _note);
+    //void melody(int* _note);
 
   private:
     /**
