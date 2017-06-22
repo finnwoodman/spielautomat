@@ -14,8 +14,8 @@
 int selectorPin;
 int numOfSteps;
 float divider;
-RotarySwitch rSwitch(A9, 10);
-SolSound SolSound(1,2);
+//RotarySwitch rSwitch(A9, 10);
+SolSound SolSound(0);
  //AgeSelector Age(A9, A8);
  //CoinAcceptor Coin;
 //Arcade Button(0,1);
@@ -25,7 +25,10 @@ SolSound SolSound(1,2);
  }*/
 
  void setup() {
- rSwitch.report(true);
+SolSound.bell();
+SolSound.bell();
+SolSound.bell();
+ //rSwitch.report(true);
  /*arcadeBus.add(0, 1);
  arcadeBus.report(true);
  arcadeBus.setBlink(100, 10);*/
@@ -51,8 +54,7 @@ SolSound SolSound(1,2);
 
 
 void loop(){
-rSwitch.refresh();
-delay(500);
+SolSound.refresh();
 //  Age.refresh();
 //  vMeter.set(100);
 //  vMeter.refresh();

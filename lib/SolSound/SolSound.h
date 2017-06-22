@@ -18,9 +18,16 @@ class SolSound
 
     /**
      * Adjust the length of each bell stroke. Default = 20ms.
-     * @param _time Duration in millis.
+     * @param _time stroke in millis.
      */
-    void adjust(long _dur);
+    void adjust(long _stroke);
+
+    /**
+     * Adjustr bell stroke and min. pause inbetween manually.
+     * @param _stroke   stroke in ms.
+     * @param _duration min. pause in ms.
+     */
+    void adjust(long _stroke, long _dur);
 
     /**
      * Hit the bell once.
@@ -45,19 +52,29 @@ class SolSound
      * Dedicated digitalOut pin on board.
      */
     int pin;
+
     /**
      * Length of a bell stroke in ms.
      */
-    long duration;
+    long stroke;
+    long oStroke;
+
     /**
-     * Default length of a bell stroke.
+     * Min. Pause between bell strokes.
      */
+    long duration;
     long oDuration;
+    /**
+     * Variable for timing.
+     */
+    long timer;
+    long pause;
 
     /**
      * Queue for repitions.
      */
     int repetitions;
+    int oRepetitions;
 
 
   protected:
