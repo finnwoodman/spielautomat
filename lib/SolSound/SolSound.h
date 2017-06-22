@@ -11,11 +11,10 @@ class SolSound
   public:
     /**
      * Constructor of SolSound
-     * Class makes use of DC motor driver to drive solenoid
+     * Class makes use of irlz34n to control a solenoid.
      * @param _pin1 dedicated digital out pin one on board
-     * @param _pin2 dedicated digital out pin two board
      */
-    SolSound(int _pin1, int _pin2);
+    SolSound(int _pin);
 
     /**
      * Adjust the length of each bell stroke. Default = 20ms.
@@ -43,10 +42,9 @@ class SolSound
 
   private:
     /**
-     * Dedicated digitalOuts pin on board.
+     * Dedicated digitalOut pin on board.
      */
-    int pin1;
-    int pin2;
+    int pin;
     /**
      * Length of a bell stroke in ms.
      */
