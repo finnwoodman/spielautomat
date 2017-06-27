@@ -7,6 +7,10 @@
 #include <CoinAcceptor.h>
 #include <RotarySwitch.h>
 #include <SolSound.h>
+#include <LED_Wrapper.h>
+
+
+
 
  //Rotary rotary(0,1);
  //ArcadeCollector arcadeBus(2);
@@ -15,17 +19,17 @@ int selectorPin;
 int numOfSteps;
 float divider;
 //RotarySwitch rSwitch(A9, 10);
-SolSound SolSound(0);
+//SolSound SolSound(0);
  //AgeSelector Age(A9, A8);
  //CoinAcceptor Coin;
 //Arcade Button(0,1);
-
+LED_Wrapper LED(2, 24);
  /*void interrupt(){
    Coin.increase();
  }*/
 
  void setup() {
-SolSound.sequence(10, 1000);
+//SolSound.sequence(10, 1000);
  //rSwitch.report(true);
  /*arcadeBus.add(0, 1);
  arcadeBus.report(true);
@@ -35,6 +39,7 @@ SolSound.sequence(10, 1000);
  //rotary.report(true);
 
  delay(5000);
+ LED.report(true);
  //vMeter.set(100);
 
  /*Age.setThreshold(5);
@@ -52,7 +57,11 @@ SolSound.sequence(10, 1000);
 
 
 void loop(){
-SolSound.refresh();
+LED.tint(CRGB::Black);
+delay(1000);
+LED.tint(CRGB::BurlyWood);
+delay(1000);
+//SolSound.refresh();
 //  Age.refresh();
 //  vMeter.set(100);
 //  vMeter.refresh();
@@ -62,4 +71,5 @@ SolSound.refresh();
 //  delay(1000);
 //rotary.refresh();
 //Button.refresh();
+
 }

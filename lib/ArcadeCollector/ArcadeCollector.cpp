@@ -60,5 +60,5 @@ void ArcadeCollector::report(boolean _debug){
     Serial.begin(9600);
   }
   debug = _debug;
-  Serial.println("ArcadeCollector ::: report() :: ACTIV");
+  Serial.println("ArcadeCollector ::: report() :: ACTIVE");
 }
