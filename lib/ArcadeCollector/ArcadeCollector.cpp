@@ -62,3 +62,7 @@ void ArcadeCollector::report(boolean _debug){
   debug = _debug;
   Serial.println("ArcadeCollector ::: report() :: ACTIVE");
 }
+
+int ArcadeCollector::getActive(){
+  return active;
+}
