@@ -11,7 +11,7 @@ public:
   void refresh();
   void setBlink(int _duration, int _cycles);
   void report(boolean _debug);
-    int getActive();
+  int getActive();
 
   ;
 private:

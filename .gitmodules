@@ -1,0 +1,12 @@
+[submodule "external/SdFat"]
+	path = external/SdFat
+	url = https://github.com/greiman/SdFat.git
+[submodule "external/SPI"]
+	path = external/SPI
+	url = https://github.com/PaulStoffregen/SPI.git
+[submodule "lib/CSV"]
+	path = lib/CSV
+	url = https://github.com/fivitti/Arduino-CSV-File.git
+[submodule "lib/SdFat"]
+	path = lib/SdFat
+	url = https://github.com/greiman/SdFat.git
