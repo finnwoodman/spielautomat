@@ -17,12 +17,15 @@ public:
   void init();
   void report(boolean _debug);
   void grab();
-
+  void search(int _team, int _duration, int _minAge, int maxAge, int _cat);
   void printData();
+  int getGame();
 
   int** fields;
   int** images;
   char** files;
+private:
+  int game;
 
 protected:
   boolean debug;

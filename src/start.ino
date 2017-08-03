@@ -9,9 +9,10 @@ void setup(){
   Games.init();
   Games.report(true);
   Games.grab();
+  //Games.printData();
 
-  Games.printData();
-
+  Games.search(5, 7, 5, 10, 1);
+  int i = Games.getGame();
 }
 
 

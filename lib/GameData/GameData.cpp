@@ -21,6 +21,8 @@ GameData::GameData( int _lines, int _fields){
   FIELDS = _fields;
   LINES = _lines;
   debug = false;
+  game = 0;
+  randomSeed(analogRead(A3));
   //Create 2D Array for games data
   fields = (int **) malloc(LINES * sizeof(int*));
   for (int i = 0; i < LINES; i++) {
@@ -38,8 +40,47 @@ GameData::GameData( int _lines, int _fields){
   for (int i = 0; i < LINES; i++) {
     images[i] = (int*) malloc(2 * sizeof(int));
   }
-}
 
+}
+void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _cat){
+  int _game[10];
+  int _pointer = 0;
+    for (int i = 0; i < LINES; i++) {
+      if (debug == true){
+        Serial.print("/");
+      }
+      if ((fields[i][0] <= _team) && (fields[i][1] >= _team)) {
+          if ((fields[i][2] <= _duration) && (fields[i][3] >= _duration)) {
+            if ((fields[i][4] <= _minAge) && (fields[i][5] >= _maxAge)) {
+              if (fields[i][5 + _cat] == 1) {
+                _game[_pointer] = i;
+                if (debug == true){
+                  Serial.print("*");
+                }
+                if (_pointer == 9) {
+                  break;
+                }
+                _pointer++;
+              }
+            }
+        }
+      }
+    }
+    if (debug == true){
+      Serial.println();
+    }
+    if (_pointer != 0) {
+        if (debug == true){
+          Serial.println("GameData:::Search()::Found several games :-)");
+        }
+      _pointer = random(0, _pointer+1);
+    }
+          if (debug == true){
+            Serial.print("Selected::: ");
+            Serial.println(_game[_pointer]);
+          }
+    game = _game[_pointer];
+}
 void GameData::grab(){
   grabData();
   grabFiles();
@@ -52,8 +93,6 @@ void GameData::grabData(){
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
   buffer[BUFFER_SIZE] = '\0';
-
-
   csv.gotoLine(2);
   csv.gotoField(1);
   for (int i = 0; i < LINES; i++) {
@@ -66,11 +105,19 @@ void GameData::grabData(){
     csv.nextLine();
     csv.gotoField(1);
   }
-
-
 }
 
+/**
+ * Returns the currently selectec game.
+ * @return Integer pointing to game in table.
+ */
+int GameData::getGame(){
+  return game;
+}
 
+/**
+ * Transfers the image sizes from csv to 2D array images[][]
+ */
 void GameData::grabImages(){
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
@@ -89,6 +136,9 @@ void GameData::grabImages(){
   }
 }
 
+/**
+ * Transfers the image file's names to an array named files.
+ */
 void GameData::grabFiles(){
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
@@ -103,6 +153,9 @@ void GameData::grabFiles(){
   }
 }
 
+/*
+ * Init SD card and file
+ */
 void GameData::init(){
   initSdCard();
   initSdFile();
@@ -144,15 +197,21 @@ void GameData::initSdCard(){
     }
   }
 }
-
+/**
+ * Enable / Disable report
+ * @param _debug [description]
+ */
 void GameData::report(boolean _debug){
   if (!Serial){
     Serial.begin(9600);
+    Serial.println("GameData ::: report() :: ACTIVE");
   }
   debug = _debug;
-  Serial.println("GameData ::: report() :: ACTIVE");
 }
 
+/**
+ * Print all transferred data.
+ */
 void GameData::printData(){
   report(true);
   for (int i = 0; i < LINES; i++) {
@@ -169,6 +228,5 @@ void GameData::printData(){
     Serial.print(images[i][0]);
     Serial.print(" x ");
     Serial.println(images[i][1]);
-    /* code */
   }
 }
