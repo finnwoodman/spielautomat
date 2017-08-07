@@ -2,9 +2,6 @@
 [submodule "lib/CSV"]
 	path = lib/CSV
 	url = https://github.com/fivitti/Arduino-CSV-File.git
-[submodule "lib/SdFat"]
-	path = lib/SdFat
-	url = https://github.com/greiman/SdFat.git
 [submodule "lib/FastLED"]
 	path = lib/FastLED
 	url = https://github.com/FastLED/FastLED.git
