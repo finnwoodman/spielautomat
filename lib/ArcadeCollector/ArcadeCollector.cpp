@@ -56,13 +56,26 @@ void ArcadeCollector::setBlink(int _duration, int _cycles){
 }
 
 void ArcadeCollector::report(boolean _debug){
+debug = _debug;
+if (debug==true) {
   if (!Serial){
     Serial.begin(9600);
   }
-  debug = _debug;
   Serial.println("ArcadeCollector ::: report() :: ACTIVE");
+}
 }
 
 int ArcadeCollector::getActive(){
   return active;
+}
+
+void ArcadeCollector::test(int _interval){
+  for (int i = 0; i < arcades ; i++){
+    bus[i].activate();
+    delay(_interval);
+    bus[i].deactivate();
+  }
+  if (debug == true ){
+    Serial.println("ArcadeCollector ::: Test()");
+  }
 }
