@@ -4,24 +4,27 @@
 #include "Arduino.h"
 #include "FastLED.h"
 
+#define NUM_LEDS 100
+#define PIN 35
 /**
  *
  */
 class LED_Wrapper
 {
   public:
-  LED_Wrapper(int _pin, int _num);
+  LED_Wrapper();
   void report(boolean _debug);
   void tint(CRGB _color);
 
 
   private:
-    CRGB *leds;
+    CRGB leds[NUM_LEDS];
+    //int NUM_LEDS;
+    //int PIN;
+    boolean debug = false;
 
   protected:
-    int NUM_LEDS;
-    int PIN;
-    boolean debug = false;
+
   };
 
 #endif

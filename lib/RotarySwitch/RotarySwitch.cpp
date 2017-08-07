@@ -53,8 +53,10 @@ int RotarySwitch::getPosition(){
  * @param _debug True or false
  */
 void RotarySwitch::report(boolean _debug){
+  debug = _debug;
+  if (debug == true){
   if (!Serial){
     Serial.begin(9600);
   }
-  debug = _debug;
+}
 }

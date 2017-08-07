@@ -113,8 +113,10 @@ void AgeSelector::setThreshold(int _buffer){
 }
 
 void AgeSelector::report(boolean _debug){
+  debug = _debug;
+  if (debug == true){
   if (!Serial){
     Serial.begin(9600);
   }
-  debug = _debug;
+}
 }

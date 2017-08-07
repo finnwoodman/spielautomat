@@ -17,10 +17,9 @@ Purpose: Small wrapper for FastLED breaking it down to some simple functions.
  * @param _pin Dedicated LED Strip's pin on board
  * @param _num NUmber of LEDs.
  */
-LED_Wrapper::LED_Wrapper(int _pin, int _num){
-  NUM_LEDS = _num;
-  PIN = _pin;
-  leds = (CRGB *)malloc(sizeof(CRGB) * NUM_LEDS);
+LED_Wrapper::LED_Wrapper(){
+
+
   FastLED.addLeds<WS2812B, PIN, RGB>(leds, NUM_LEDS);
   tint(CRGB::Black);
 }

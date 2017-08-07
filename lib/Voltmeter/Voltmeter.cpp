@@ -81,8 +81,24 @@ void Voltmeter::refresh(){
 }
 
 void Voltmeter::report(boolean _debug){
-  if (!Serial){
-    Serial.begin(9600);
-  }
   debug = _debug;
+  if (debug == true){
+    if (!Serial){
+      Serial.begin(9600);
+    }
+  }
+}
+
+void Voltmeter::test(){
+  set(100);
+  refresh();
+  delay(500);
+  set(200);
+  refresh();
+  delay(500);
+  set(150);
+  refresh();
+  delay(500);
+  set(0);
+  refresh();
 }

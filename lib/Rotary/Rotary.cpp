@@ -72,10 +72,12 @@ void Rotary::refresh(){
 
 //Activate Debug via Serial Output
 void Rotary::report(boolean _debug){
+debug = _debug;
+if (debug == true) {
   if (!Serial){
     Serial.begin(9600);
   }
-  debug = _debug;
+}
 }
 
 //Increase cycles manually

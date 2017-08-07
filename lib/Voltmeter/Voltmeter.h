@@ -13,6 +13,7 @@ class Voltmeter
     void refresh();
     int getPosition();
     void report(boolean _debug);
+    void test();
   ;
 
 
