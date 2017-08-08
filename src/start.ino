@@ -20,7 +20,7 @@ RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
 Toggle tPilot(11);
 Voltmeter vMeter(A3);
-//CoinAcceptor Coin;
+CoinAcceptor Coin;
 Rotary rotary(33,34);
 SolSound solenoid(16);
 //LED_Wrapper LED();
@@ -50,6 +50,10 @@ void setup(){
   //Rotary
   rotary.autoDecrease(5000);
   rotary.report(true);
+  //Coins
+  Coin.report(true);
+  attachInterrupt(10, interrupt ,RISING);
+
   //LED*/
 
 
@@ -76,4 +80,8 @@ void loop(){
   solenoid.refresh();
 
 
+}
+
+void interrupt(){
+  Coin.increase();
 }
