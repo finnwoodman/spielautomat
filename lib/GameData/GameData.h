@@ -5,6 +5,7 @@
 #include "Arduino.h"
 #include "CSVFile.h"
 #include "SdFat.h"
+#include "Adafruit_Thermal.h"
 
 #define FILENAME "table.csv"
 #define FILENAMESIZE 6
@@ -23,10 +24,12 @@ public:
 
   int** fields;
   int** images;
-  char** files;
+  String files[100];
   void print();
-  
+  void print(int _game);
+
 private:
+
   int game;
 
 
@@ -40,6 +43,7 @@ protected:
 
   void initSdFile();
   void initSdCard();
+  void initPrinter();
 
   int LINES;
   int FIELDS;

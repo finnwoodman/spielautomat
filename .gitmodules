@@ -1,7 +1,3 @@
-
-[submodule "lib/CSV"]
-	path = lib/CSV
-	url = https://github.com/fivitti/Arduino-CSV-File.git
 [submodule "lib/SdFat"]
 	path = lib/SdFat
 	url = https://github.com/greiman/SdFat.git
@@ -11,3 +7,6 @@
 [submodule "lib/SD"]
 	path = lib/SD
 	url = https://github.com/PaulStoffregen/SD.git
+[submodule "lib/Adafruit"]
+	path = lib/Adafruit
+	url = https://github.com/adafruit/Adafruit-Thermal-Printer-Library.git

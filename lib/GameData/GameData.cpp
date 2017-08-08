@@ -2,7 +2,9 @@
 #include "GameData.h"
 #include "SdFat.h"
 #include "CSVFile.h"
+#include "Adafruit_Thermal.h"
 
+Adafruit_Thermal printer(&Serial1,2);
 /**
 GameData class
 GameData.cpp
@@ -29,18 +31,11 @@ GameData::GameData( int _lines, int _fields){
     fields[i] = (int*) malloc(FIELDS * sizeof(int));
   }
 
-  //Create Array of strings for games filename
-  files = (char **) malloc(LINES * sizeof(char*));
-  for (int i = 0; i < LINES; i++) {
-    files[i] = (char*) malloc(FILENAMESIZE * sizeof(char));
-  }
-
   //Create 2D Array for image sizes
   images = (int **) malloc(LINES * sizeof(int*));
   for (int i = 0; i < LINES; i++) {
     images[i] = (int*) malloc(2 * sizeof(int));
   }
-
 }
 void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _cat){
   int _game[10];
@@ -81,12 +76,35 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
           }
     game = _game[_pointer];
 }
+
 void GameData::print(){
-  String sdFiName = "xxxx1.bin";
+  String sdFiName = "test.bin";
   const char * c = sdFiName.c_str();
   File sdCardFile = sd.open (c, FILE_READ);
-
+  while (sdCardFile.available()) {
+    Serial.println("Printing");
+    printer.printBitmap(384, 1128, dynamic_cast<Stream*>(&sdCardFile));
+  }
+  sdCardFile.close();
+  printer.feed(10);
 }
+
+void GameData::print(int _game){
+  Serial.println("NAME ->");
+  Serial.println(files[_game]);
+  String sdFiName = files[_game];
+  sdFiName+=".bin";
+  Serial.println(sdFiName);
+  const char * c = sdFiName.c_str();
+  File sdCardFile = sd.open (c, FILE_READ);
+  while (sdCardFile.available()) {
+    Serial.println("Printing");
+    printer.printBitmap(images[_game][0], images[_game][1], dynamic_cast<Stream*>(&sdCardFile));
+  }
+  sdCardFile.close();
+  printer.feed(10);
+}
+
 void GameData::grab(){
   grabData();
   grabFiles();
@@ -149,12 +167,11 @@ void GameData::grabFiles(){
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
   buffer[BUFFER_SIZE] = '\0';
-
   csv.gotoLine(2);
   for (int i = 0; i < LINES; i++) {
     csv.gotoField(13);
     csv.readField(buffer, BUFFER_SIZE);
-    files[i] = buffer;
+    files[i] = String(buffer);
     csv.nextLine();
   }
 }
@@ -165,6 +182,13 @@ void GameData::grabFiles(){
 void GameData::init(){
   initSdCard();
   initSdFile();
+  initPrinter();
+}
+
+void GameData::initPrinter(){
+  Serial1.begin(19200);
+  printer.begin(100);
+  printer.feed(10);
 }
 /**
  * Open SD file once.
@@ -221,7 +245,7 @@ void GameData::report(boolean _debug){
 void GameData::printData(){
   report(true);
   for (int i = 0; i < LINES; i++) {
-    Serial.println(files[i]);
+    Serial.println(String(files[i]));
     Serial.print(i);
     Serial.println(" ::");
     for (int j = 0; j < FIELDS; j++) {

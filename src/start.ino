@@ -14,7 +14,7 @@
 
 GameData Games(100,11);
 //Hardware
-ArcadeCollector arcadeBus(5);
+/*ArcadeCollector arcadeBus(5);
 RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
@@ -23,13 +23,13 @@ Voltmeter vMeter(A2);
 CoinAcceptor Coin;
 Rotary rotary(34,35);
 SolSound solenoid(17);
-LED_Wrapper LED();
+LED_Wrapper LED();*/
 
 
 void setup(){
-
   delay(10000);
-  //Arcadebus
+  Serial.println("Beginn Setup");
+/*  //Arcadebus
   arcadeBus.add(31, 32);
   arcadeBus.add(29, 30);
   arcadeBus.add(27, 28);
@@ -50,26 +50,29 @@ void setup(){
   //Rotary
   rotary.autoDecrease(2000);
   rotary.report(false);
-  //LED
+  //LED*/
 
 
   //GameData
+  Games.report(true);
   Games.init();
-  Games.print();
+  Games.grab();
+  Games.printData();
+  Games.print(0);
 
   //Test Section
-  arcadeBus.test(500);
+  //arcadeBus.test(500);
 
 }
 
 
 void loop(){
-  arcadeBus.refresh();
+/*  arcadeBus.refresh();
   rPlayers.refresh();
   rDuration.refresh();
   tPilot.refresh();
   vMeter.refresh();
   rotary.refresh();
-  solenoid.refresh();
+  solenoid.refresh();*/
 
 }

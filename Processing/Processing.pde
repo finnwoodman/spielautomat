@@ -45,7 +45,7 @@ void folderSelected(File selection) {
   imgNames = new String[table.getRowCount()];
   for (int i = 0; i < imgNames.length; i++) {
     imgNames[i] = table.getString(i,"Datei");
-    //imgNames[i]+=".jpg";
+    imgNames[i]+=".png";
   }
   }
 
