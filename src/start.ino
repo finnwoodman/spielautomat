@@ -14,8 +14,8 @@
 
 GameData Games(100,11);
 //Hardware
-/*ArcadeCollector arcadeBus(5);
-RotarySwitch rPlayers(A8, 10);
+ArcadeCollector arcadeBus(5);
+/*RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
 Toggle tPilot(11);
@@ -27,16 +27,17 @@ LED_Wrapper LED();*/
 
 
 void setup(){
-  delay(10000);
+
   Serial.println("Beginn Setup");
-/*  //Arcadebus
-  arcadeBus.add(31, 32);
-  arcadeBus.add(29, 30);
-  arcadeBus.add(27, 28);
-  arcadeBus.add(25, 26);
+  //Arcadebus
+  arcadeBus.add(32, 31);
+  arcadeBus.add(30, 29);
+  arcadeBus.add(28, 27);
+  arcadeBus.add(26, 25);
   arcadeBus.add(24,12);
-  arcadeBus.report(false);
-  //Rotary switches
+  arcadeBus.setBlink(100,5);
+  arcadeBus.report(true);
+/*  //Rotary switches
   rPlayers.report(false);
   rDuration.report(false);
   //AgeSelector
@@ -57,7 +58,6 @@ void setup(){
   Games.report(true);
   Games.init();
   Games.grab();
-  Games.printData();
   Games.print(0);
 
   //Test Section
@@ -67,8 +67,8 @@ void setup(){
 
 
 void loop(){
-/*  arcadeBus.refresh();
-  rPlayers.refresh();
+  arcadeBus.refresh();
+/*rPlayers.refresh();
   rDuration.refresh();
   tPilot.refresh();
   vMeter.refresh();
