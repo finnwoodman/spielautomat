@@ -24,8 +24,11 @@ public:
   int** fields;
   int** images;
   char** files;
+  void print();
+  
 private:
   int game;
+
 
 protected:
   boolean debug;
@@ -33,6 +36,7 @@ protected:
   void grabData();
   void grabFiles();
   void grabImages();
+
 
   void initSdFile();
   void initSdCard();

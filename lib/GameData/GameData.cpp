@@ -81,6 +81,12 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
           }
     game = _game[_pointer];
 }
+void GameData::print(){
+  String sdFiName = "xxxx1.bin";
+  const char * c = sdFiName.c_str();
+  File sdCardFile = sd.open (c, FILE_READ);
+
+}
 void GameData::grab(){
   grabData();
   grabFiles();

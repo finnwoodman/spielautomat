@@ -55,6 +55,7 @@ void setup(){
 
   //GameData
   Games.init();
+  Games.print();
 
   //Test Section
   arcadeBus.test(500);
