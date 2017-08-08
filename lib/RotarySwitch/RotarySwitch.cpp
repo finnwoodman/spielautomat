@@ -8,6 +8,7 @@
 
 RotarySwitch::RotarySwitch(int _pin, int _intervals)
 {
+    oTime = millis();
     oIntervals = _intervals;
     intervals = 1024/_intervals;
     pin = _pin;
@@ -20,14 +21,17 @@ RotarySwitch::RotarySwitch(int _pin, int _intervals)
  * Re-Read rot. switch and calc step.
  */
 void RotarySwitch::refresh(){
+  if ((millis()-oTime)>100){
   value = analogRead(pin);
   step = round(value/intervals);
+  oTime = millis();
   if (debug == true) {
     Serial.println("RotarySwitch::Refresh:");
     Serial.print("Value : ");
     Serial.println(value);
     Serial.print("Step : ");
     Serial.println(step);
+  }
   }
 }
 

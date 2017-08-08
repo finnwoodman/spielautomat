@@ -102,11 +102,15 @@ void Arcade::reset(){
 }
 
 void Arcade::report(boolean _debug){
-  if (!Serial){
-    Serial.begin(9600);
-  }
   debug = _debug;
+  if (debug == true){
+    if (!Serial){
+      Serial.begin(9600);
+    }
+  }
 }
+
+
 
 void Arcade::activate(){
 	digitalWrite(pin2, HIGH);

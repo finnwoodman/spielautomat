@@ -38,6 +38,7 @@ class RotarySwitch
     int value;
     int step;
     boolean debug = false;
+    unsigned long oTime = 0;
 
 
 };

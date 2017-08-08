@@ -21,12 +21,14 @@ void ArcadeCollector::add(int _pin1, int _pin2){
 
   if (index < arcades){
     bus[index].add(_pin1, _pin2);
-    bus[index].report(true);
-    index++;
     if (debug == true ){
+      bus[index].report(true);
       Serial.print("ArcadeCollector ::: added Arcade(");
-    //  Serial.println(_pin1 + " , " + _pin2 + ")" );
     }
+    else {
+      bus[index].report(false);
+    }
+      index++;
   }
 }
 
