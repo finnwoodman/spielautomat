@@ -14,6 +14,7 @@
 
 GameData Games(100,11);
 //Hardware
+LED_Wrapper Line;
 ArcadeCollector arcadeBus(5);
 RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
@@ -23,7 +24,7 @@ Voltmeter vMeter(A3);
 CoinAcceptor Coin;
 Rotary rotary(33,34);
 SolSound solenoid(16);
-//LED_Wrapper LED();
+
 
 
 void setup(){
@@ -49,12 +50,14 @@ void setup(){
 
   //Rotary
   rotary.autoDecrease(5000);
-  rotary.report(true);
+  rotary.report(false);
   //Coins
-  Coin.report(true);
+  Coin.report(false);
   attachInterrupt(10, interrupt ,RISING);
 
-  //LED*/
+  //LED
+  Line.tint(CRGB::Red);
+  Line.refresh();
 
 
   //GameData
@@ -78,8 +81,8 @@ void loop(){
   vMeter.refresh();
   rotary.refresh();
   solenoid.refresh();
-
-
+  Line.line(rotary.getSteps(), rotary.getMaxSteps(), CRGB::Bisque);
+  Line.refresh();
 }
 
 void interrupt(){

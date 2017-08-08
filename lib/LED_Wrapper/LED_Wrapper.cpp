@@ -18,10 +18,7 @@ Purpose: Small wrapper for FastLED breaking it down to some simple functions.
  * @param _num NUmber of LEDs.
  */
 LED_Wrapper::LED_Wrapper(){
-
-
-  FastLED.addLeds<WS2812B, PIN, RGB>(leds, NUM_LEDS);
-  tint(CRGB::Black);
+  FastLED.addLeds<WS2812B, PIN, GRB>(leds, NUM_LEDS);
 }
 
 /**
@@ -44,5 +41,20 @@ void LED_Wrapper::tint(CRGB _color){
   for (int i = 0; i < NUM_LEDS; i++) {
     leds[i] = _color;
   }
+}
+
+void LED_Wrapper::refresh(){
   FastLED.show();
+}
+
+void LED_Wrapper::line(int _pos, int _max, CRGB _color ){
+  int _tmp = map(_pos, 0, _max, 0, 100);
+
+  for (int i = 0; i < _tmp; i++) {
+    leds[i] = _color;
+  }
+  Serial.println("SEE:");
+  Serial.println(_pos);
+  Serial.println(_max);
+  Serial.println(_tmp);
 }

@@ -13,6 +13,12 @@ class Rotary
     void increase(int _inc);
     void decrease(int _dec);
     void autoDecrease(long _interval);
+    void setMax(int _max);
+    int getMax();
+    int getCycles();
+    int getSteps();
+    int getMaxSteps();
+
   ;
 
 
@@ -21,6 +27,7 @@ class Rotary
     int pin1;
     int pin2;
 
+    int max;
     //Steps, cycles and direction
     boolean bCW;
     int cycles = 0;

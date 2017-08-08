@@ -15,6 +15,8 @@ class LED_Wrapper
   LED_Wrapper();
   void report(boolean _debug);
   void tint(CRGB _color);
+  void refresh();
+  void line(int _pos, int _max, CRGB _color);
 
 
   private:

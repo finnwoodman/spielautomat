@@ -11,7 +11,31 @@ Rotary::Rotary(int _pin1, int _pin2)
   pin1 = _pin1;
   pin2 = _pin2;
   last = digitalRead(pin1);
+  max = 10;
 
+}
+
+void Rotary::setMax(int _max){
+  max = _max;
+}
+
+int Rotary::getMax(){
+  return max;
+}
+
+int Rotary::getCycles(){
+  return cycles;
+}
+
+int Rotary::getSteps(){
+  int _steps = cycles*40;
+  _steps+= steps;
+  return _steps;
+}
+
+int Rotary::getMaxSteps(){
+  int _max = max*40;
+  return _max;
 }
 
 //Main function - Update RT Knobs Position - Calls autoDecrease() if activated.
