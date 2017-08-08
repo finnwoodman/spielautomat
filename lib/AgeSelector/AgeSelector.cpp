@@ -55,11 +55,13 @@ void AgeSelector::refresh(){
     max = min;
     min = _tmp;
   }
-  if (value1 =! ovalue1){
-  Serial.println(value1);
-  }
-  if (value2 =! ovalue2){
-  Serial.println(value2);
+  if(debug == true){
+    if (value1 =! ovalue1){
+      Serial.println(value1);
+    }
+    if (value2 =! ovalue2){
+      Serial.println(value2);
+    }
   }
   oTime = millis();
   }

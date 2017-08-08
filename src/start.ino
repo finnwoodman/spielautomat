@@ -18,8 +18,8 @@ ArcadeCollector arcadeBus(5);
 RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
-/*Toggle tPilot(11);
-Voltmeter vMeter(A2);
+Toggle tPilot(11);
+/*Voltmeter vMeter(A2);
 CoinAcceptor Coin;
 Rotary rotary(34,35);
 SolSound solenoid(17);
@@ -27,8 +27,7 @@ LED_Wrapper LED();*/
 
 
 void setup(){
-
-  Serial.println("Beginn Setup");
+  Serial.begin(9600);
   //Arcadebus
   arcadeBus.add(32, 31);
   arcadeBus.add(30, 29);
@@ -44,7 +43,7 @@ void setup(){
   sAge.setThreshold(5);
   sAge.setSteps(0 , 200 , 400, 600, 800, 900, 1023);
   sAge.setAges(3 , 5, 8, 12, 16);
-  sAge.report(true);
+  sAge.report(false);
   /*//Voltmeter
   vMeter.report(false);
   vMeter.test();
@@ -71,8 +70,10 @@ void loop(){
   rPlayers.refresh();
   rDuration.refresh();
   sAge.refresh();
-  /*tPilot.refresh();
-  vMeter.refresh();
+  tPilot.refresh();
+  Serial.println(tPilot.get());
+  delay(100);
+  /*vMeter.refresh();
   rotary.refresh();
   solenoid.refresh();*/
 
