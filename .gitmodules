@@ -8,3 +8,6 @@
 [submodule "lib/FastLed"]
 	path = lib/FastLed
 	url = https://github.com/FastLED/FastLED.git
+[submodule "lib/SD"]
+	path = lib/SD
+	url = https://github.com/PaulStoffregen/SD.git
