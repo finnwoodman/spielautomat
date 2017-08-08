@@ -19,11 +19,11 @@ RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
 Toggle tPilot(11);
-/*Voltmeter vMeter(A2);
-CoinAcceptor Coin;
-Rotary rotary(34,35);
-SolSound solenoid(17);
-LED_Wrapper LED();*/
+Voltmeter vMeter(A3);
+//CoinAcceptor Coin;
+Rotary rotary(33,34);
+SolSound solenoid(16);
+//LED_Wrapper LED();
 
 
 void setup(){
@@ -44,12 +44,12 @@ void setup(){
   sAge.setSteps(0 , 200 , 400, 600, 800, 900, 1023);
   sAge.setAges(3 , 5, 8, 12, 16);
   sAge.report(false);
-  /*//Voltmeter
+  //Voltmeter
   vMeter.report(false);
-  vMeter.test();
+
   //Rotary
-  rotary.autoDecrease(2000);
-  rotary.report(false);
+  rotary.autoDecrease(5000);
+  rotary.report(true);
   //LED*/
 
 
@@ -71,10 +71,9 @@ void loop(){
   rDuration.refresh();
   sAge.refresh();
   tPilot.refresh();
-  Serial.println(tPilot.get());
-  delay(100);
-  /*vMeter.refresh();
+  vMeter.refresh();
   rotary.refresh();
-  solenoid.refresh();*/
+  solenoid.refresh();
+
 
 }
