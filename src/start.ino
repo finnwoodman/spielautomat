@@ -16,9 +16,9 @@ GameData Games(100,11);
 //Hardware
 ArcadeCollector arcadeBus(5);
 RotarySwitch rPlayers(A8, 10);
-/*RotarySwitch rDuration(A9, 10);
+RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
-Toggle tPilot(11);
+/*Toggle tPilot(11);
 Voltmeter vMeter(A2);
 CoinAcceptor Coin;
 Rotary rotary(34,35);
@@ -38,14 +38,14 @@ void setup(){
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
   //Rotary switches
-  rPlayers.report(true);
-  /*rDuration.report(false);
+  rPlayers.report(false);
+  rDuration.report(false);
   //AgeSelector
   sAge.setThreshold(5);
   sAge.setSteps(0 , 200 , 400, 600, 800, 900, 1023);
   sAge.setAges(3 , 5, 8, 12, 16);
-  sAge.report(false);
-  //Voltmeter
+  sAge.report(true);
+  /*//Voltmeter
   vMeter.report(false);
   vMeter.test();
   //Rotary
@@ -69,8 +69,9 @@ void setup(){
 void loop(){
   arcadeBus.refresh();
   rPlayers.refresh();
-  /*rDuration.refresh();
-  tPilot.refresh();
+  rDuration.refresh();
+  sAge.refresh();
+  /*tPilot.refresh();
   vMeter.refresh();
   rotary.refresh();
   solenoid.refresh();*/

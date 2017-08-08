@@ -17,9 +17,11 @@ AgeSelector::AgeSelector(int _pin1, int _pin2)
   adapt = false;
   buffer = 5;
   debug = false;
+  oTime = millis();
 }
 
 void AgeSelector::refresh(){
+  if ((millis()-oTime)>100){
   ovalue1 = value1;
   ovalue2 = value2;
   value1 = analogRead(pin1);
@@ -53,9 +55,14 @@ void AgeSelector::refresh(){
     max = min;
     min = _tmp;
   }
+  if (value1 =! ovalue1){
   Serial.println(value1);
+  }
+  if (value2 =! ovalue2){
   Serial.println(value2);
-
+  }
+  oTime = millis();
+  }
 }
 
 void AgeSelector::setSteps(int _min, int _step1,int _step2, int _step3, int _step4, int _step5, int _max){

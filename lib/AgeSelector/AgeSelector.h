@@ -32,7 +32,7 @@ class AgeSelector
 
 
   protected:
-
+    unsigned long oTime = 0;
 
 
 
