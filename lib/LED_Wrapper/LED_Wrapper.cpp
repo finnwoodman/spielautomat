@@ -1,6 +1,10 @@
+#define UPDATES_PER_SECOND 100
+#define FASTLED_ALLOW_INTERRUPTS 0
+
 #include "LED_Wrapper.h"
 #include "Arduino.h"
 #include "FastLED.h"
+
 
 /**
 LED Wrapper Class
@@ -18,7 +22,11 @@ Purpose: Small wrapper for FastLED breaking it down to some simple functions.
  * @param _num NUmber of LEDs.
  */
 LED_Wrapper::LED_Wrapper(){
-  FastLED.addLeds<WS2812B, PIN, GRB>(leds, NUM_LEDS);
+
+  pinMode(PIN, OUTPUT);
+  FastLED.addLeds<WS2812, PIN, RGB>(leds, NUM_LEDS);
+  FastLED.setBrightness(5);
+  //FastLED.setMaxPowerInVoltsAndMilliamps(5, 1000);
 }
 
 /**
@@ -48,13 +56,19 @@ void LED_Wrapper::refresh(){
 }
 
 void LED_Wrapper::line(int _pos, int _max, CRGB _color ){
+
   int _tmp = map(_pos, 0, _max, 0, 100);
 
   for (int i = 0; i < _tmp; i++) {
-    leds[i] = _color;
+  //  if (leds[i] != _color){
+      leds[i] = _color;
+  //  }
   }
-  Serial.println("SEE:");
-  Serial.println(_pos);
-  Serial.println(_max);
-  Serial.println(_tmp);
+
+  for (int i = NUM_LEDS; i >= _tmp; i--) {
+      if (leds[i] == _color){
+        leds[i] = CRGB::Black;
+      }
+    }
+
 }

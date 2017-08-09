@@ -38,6 +38,31 @@ int Rotary::getMaxSteps(){
   return _max;
 }
 
+void Rotary::measureSpeed(){
+
+  if ((millis() - pTime) > 1000) {
+    oSpeed = speed;
+    Serial.print("oSpeed->");
+    Serial.println(oSpeed);
+    speed = 0;
+    speed = (cycles*40)+steps;
+    if ((speed-oSpeed)>=0) {
+        speed = speed - oSpeed;
+    }
+    else {
+      speed = 0;
+    }
+    Serial.print("speed->");
+    Serial.println(speed);
+    pTime = millis();
+
+  }
+}
+
+int Rotary::getSpeed(){
+  return speed;
+}
+
 //Main function - Update RT Knobs Position - Calls autoDecrease() if activated.
 void Rotary::refresh(){
 
@@ -78,12 +103,12 @@ void Rotary::refresh(){
   last = val;
 
   //AutoDecrease Section
-  if ((autoTime == true) && (cycles > 0)){
+  if ((autoCycle == true) && (cycles > 0)){
 
     long nTime = millis();
     if ((nTime - oTime) > interval ){
       if (debug == true){
-        Serial.print ("ROTARY LIB ::: autoTime() -> ");
+        Serial.print ("ROTARY LIB ::: autoCycle() -> ");
         Serial.print (interval);
         Serial.println ("ms.");
       }
@@ -92,6 +117,29 @@ void Rotary::refresh(){
     }
 
     }
+
+    //AutoDecreaseSteps Section
+    if ((autoSteps == true) && (steps >= 0)){
+      long nTime = millis();
+      if ((nTime - oTime) > interval ){
+        if (debug == true){
+          Serial.print ("ROTARY LIB ::: autoCycle() -> ");
+          Serial.print (interval);
+          Serial.println ("ms.");
+        }
+
+        if ((steps == 0) && (cycles > 0)) {
+          steps = 40;
+          cycles--;
+        }
+        if ((steps == 0) && (cycles == 0)) {
+        increaseSteps(1);
+        }
+        decreaseSteps(1);
+        oTime = nTime;
+      }
+      }
+    measureSpeed();
 }
 
 //Activate Debug via Serial Output
@@ -126,16 +174,49 @@ void Rotary::decrease(int _dec){
     }
 }
 
+void Rotary::increaseSteps(int _inc){
+  steps+=_inc;
+  if (debug == true ){
+    Serial.print ("ROTARY LIB ::: increaseSteps() -> ");
+    Serial.print(cycles);
+    Serial.print(".");
+    Serial.println(steps);
+  }
+}
+
+void Rotary::decreaseSteps(int _dec){
+  steps-=_dec;
+  if (debug == true ){
+    Serial.print ("ROTARY LIB ::: decreaseSteps() -> ");
+    Serial.print(cycles);
+    Serial.print(".");
+    Serial.println(steps);
+  }
+}
+
 //Activate autoDecrease and set interval
 void Rotary::autoDecrease(long _interval){
 
   interval = _interval;
-  autoTime = true;
+  autoCycle = true;
+  autoSteps = false;
 
   if (debug == true ){
     Serial.print ("ROTARY LIB ::: autoDecrease() :::: ");
     Serial.print(_interval);
     Serial.println("ms");
   }
+}
+//Activate autoDecrease and set interval
+void Rotary::autoDecreaseSteps(long _interval){
 
+  interval = _interval;
+  autoCycle = false;
+  autoSteps = true;
+
+  if (debug == true ){
+    Serial.print ("ROTARY LIB ::: autoDecreaseSteps() :::: ");
+    Serial.print(_interval);
+    Serial.println("ms");
+  }
 }

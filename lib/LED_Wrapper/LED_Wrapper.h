@@ -1,6 +1,8 @@
 #ifndef LED_Wrapper_h
 #define LED_Wrapper_h
 
+
+
 #include "Arduino.h"
 #include "FastLED.h"
 
@@ -21,8 +23,6 @@ class LED_Wrapper
 
   private:
     CRGB leds[NUM_LEDS];
-    //int NUM_LEDS;
-    //int PIN;
     boolean debug = false;
 
   protected:
