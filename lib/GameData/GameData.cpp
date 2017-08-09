@@ -23,6 +23,7 @@ GameData::GameData( int _lines, int _fields){
   FIELDS = _fields;
   LINES = _lines;
   debug = false;
+  hasPrinter = true;
   game = 0;
   randomSeed(analogRead(A3));
   //Create 2D Array for games data
@@ -114,12 +115,20 @@ void GameData::grab(){
  * Transfers CSV data into an 2D array.
  */
 void GameData::grabData(){
+  if (debug == true) {
+    Serial.println("GameData ::: grabData() ::Started.");
+  }
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
   buffer[BUFFER_SIZE] = '\0';
   csv.gotoLine(2);
   csv.gotoField(1);
+  boolean _tmp = true;
   for (int i = 0; i < LINES; i++) {
+    if (debug == true) {
+      Serial.print("GameData ::: grabData() :: Line: ");
+      Serial.println(i);
+    }
     for (int j = 0; j < FIELDS; j++) {
       int numBuffer = 0;
       csv.readField(numBuffer, buffer, BUFFER_SIZE);
@@ -143,12 +152,24 @@ int GameData::getGame(){
  * Transfers the image sizes from csv to 2D array images[][]
  */
 void GameData::grabImages(){
+  if (debug == true) {
+    Serial.println("GameData ::: grabImages() ::Started.");
+  }
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
   buffer[BUFFER_SIZE] = '\0';
-
+  boolean _tmp = true;
   csv.gotoLine(2);
   for (int i = 0; i < LINES; i++) {
+    if (debug == true) {
+      if (_tmp == true){
+      Serial.print("GameData ::: grabImages() :: ");
+      _tmp = false;
+      }
+      else {
+      Serial.print("/");
+      }
+    }
     int numBuffer = 0;
     csv.gotoField(14);
     csv.readField(numBuffer, buffer, BUFFER_SIZE);
@@ -158,21 +179,40 @@ void GameData::grabImages(){
     images[i][1] = numBuffer;
     csv.nextLine();
   }
+  if (debug == true) {
+    Serial.println(">");
+  }
 }
 
 /**
  * Transfers the image file's names to an array named files.
  */
 void GameData::grabFiles(){
+  if (debug == true) {
+    Serial.println("GameData ::: grabFiles() ::Started.");
+  }
   const byte BUFFER_SIZE = 5;
   char buffer[BUFFER_SIZE + 1];
   buffer[BUFFER_SIZE] = '\0';
   csv.gotoLine(2);
+  boolean _tmp = true;
   for (int i = 0; i < LINES; i++) {
+    if (debug == true) {
+      if (_tmp == true){
+      Serial.print("GameData ::: grabFiles() :: ");
+      _tmp = false;
+      }
+      else {
+      Serial.print("/");
+      }
+    }
     csv.gotoField(13);
     csv.readField(buffer, BUFFER_SIZE);
     files[i] = String(buffer);
     csv.nextLine();
+  }
+  if ((debug == true) && (_tmp == false)) {
+    Serial.println(">");
   }
 }
 
@@ -182,13 +222,30 @@ void GameData::grabFiles(){
 void GameData::init(){
   initSdCard();
   initSdFile();
-  initPrinter();
+  if (hasPrinter == true){
+    initPrinter();
+  }
+}
+
+/*
+ * Init SD card and file
+ */
+void GameData::init(boolean _printer){
+  hasPrinter = _printer;
+  initSdCard();
+  initSdFile();
+  if (hasPrinter == true){
+    initPrinter();
+  }
 }
 
 void GameData::initPrinter(){
   Serial1.begin(19200);
   printer.begin(100);
   printer.feed(10);
+  if(debug == true){
+    Serial.println("GameData ::: initPrinter() ::Successfully started.");
+  }
 }
 /**
  * Open SD file once.
@@ -232,11 +289,12 @@ void GameData::initSdCard(){
  * @param _debug [description]
  */
 void GameData::report(boolean _debug){
+  debug = _debug;
+  if (debug == true){
   if (!Serial){
     Serial.begin(9600);
-    Serial.println("GameData ::: report() :: ACTIVE");
   }
-  debug = _debug;
+}
 }
 
 /**

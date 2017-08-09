@@ -16,6 +16,7 @@ class GameData
 public:
   GameData(int _fields, int _lines);
   void init();
+  void init(boolean _printer);
   void report(boolean _debug);
   void grab();
   void search(int _team, int _duration, int _minAge, int maxAge, int _cat);
@@ -35,6 +36,7 @@ private:
 
 protected:
   boolean debug;
+  boolean hasPrinter;
 
   void grabData();
   void grabFiles();

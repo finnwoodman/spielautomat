@@ -1,6 +1,8 @@
 #ifndef LED_Wrapper_h
 #define LED_Wrapper_h
 
+
+
 #include "Arduino.h"
 #include "FastLED.h"
 
@@ -17,15 +19,38 @@ class LED_Wrapper
   void tint(CRGB _color);
   void refresh();
   void line(int _pos, int _max, CRGB _color);
+  void counterClockwise();
+  void clockwise();
+
+  void setColor(CRGB _color);
+
+  void initArrows();
+  void addArrow(int _center, CRGB _highlight);
+  void setArrowSize(int _size);
+  int getArrows();
+  int getArrowSize();
+
+  void setAnimation(long _duration);
+
 
 
   private:
     CRGB leds[NUM_LEDS];
-    //int NUM_LEDS;
-    //int PIN;
     boolean debug = false;
 
   protected:
+    CRGB color = CRGB::BlueViolet;
+    int arrowSize;
+    bool clw;
+    int* arrows;
+    CRGB scheme[NUM_LEDS];
+
+    //Rainbow Animation
+    long oTime;
+    long duration;
+    bool animation;
+
+
 
   };
 

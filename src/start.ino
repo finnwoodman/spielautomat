@@ -23,7 +23,7 @@ Toggle tPilot(11);
 Voltmeter vMeter(A3);
 CoinAcceptor Coin;
 Rotary rotary(33,34);
-SolSound solenoid(16);
+SolSound solenoid(A2);
 
 
 
@@ -49,25 +49,39 @@ void setup(){
   vMeter.report(false);
 
   //Rotary
-  rotary.autoDecrease(5000);
+  rotary.autoDecreaseSteps(150);
+  rotary.setMax(3);
   rotary.report(false);
   //Coins
   Coin.report(false);
   attachInterrupt(10, interrupt ,RISING);
 
   //LED
-  Line.tint(CRGB::Red);
+  Line.counterClockwise();
+  Line.setColor(CRGB::Blue);
+
+  Line.initArrows();
+  Line.setArrowSize(7);
+
+  Line.addArrow(19, CRGB::Red);
+  Line.addArrow(26, CRGB::Orange);
+  Line.addArrow(50, CRGB::Green);
+  Line.addArrow(73,CRGB::White);
+
+  Line.setAnimation(50);
+
   Line.refresh();
 
 
   //GameData
-  Games.report(false);
-  Games.init();
+  Games.report(true);
+  Games.init(false);
   Games.grab();
   //Games.print(0);
 
   //Test Section
   //arcadeBus.test(500);
+
 
 }
 
@@ -78,11 +92,13 @@ void loop(){
   rDuration.refresh();
   sAge.refresh();
   tPilot.refresh();
+  vMeter.set(map(rotary.getSpeed(), 0,200,0,255));
   vMeter.refresh();
   rotary.refresh();
   solenoid.refresh();
-  Line.line(rotary.getSteps(), rotary.getMaxSteps(), CRGB::Bisque);
+  Line.line(rotary.getSteps(), rotary.getMaxSteps(), CRGB::Green);
   Line.refresh();
+
 }
 
 void interrupt(){
