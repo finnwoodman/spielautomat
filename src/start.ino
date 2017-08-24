@@ -60,7 +60,6 @@ void setup(){
   Line.counterClockwise();
   Line.setColor(CRGB::Blue);
 
-  Line.initArrows();
   Line.setArrowSize(7);
 
   Line.addArrow(19, CRGB::Red);
@@ -68,7 +67,7 @@ void setup(){
   Line.addArrow(50, CRGB::Green);
   Line.addArrow(73,CRGB::White);
 
-  Line.setAnimation(50);
+
 
   Line.refresh();
 
@@ -96,6 +95,18 @@ void loop(){
   vMeter.refresh();
   rotary.refresh();
   solenoid.refresh();
+  if (rotary.getSteps() > rotary.getMaxSteps()) {
+    Line.setModus(1);
+  }
+
+  if (rotary.getSteps() < 1) {
+    Line.setModus(2);
+  }
+
+  if ((rotary.getSteps() > 1) && (rotary.getSteps() < rotary.getMaxSteps())) {
+    Line.setModus(0);
+  }
+
   Line.line(rotary.getSteps(), rotary.getMaxSteps(), CRGB::Green);
   Line.refresh();
 

@@ -24,13 +24,13 @@ class LED_Wrapper
 
   void setColor(CRGB _color);
 
-  void initArrows();
   void addArrow(int _center, CRGB _highlight);
   void setArrowSize(int _size);
-  int getArrows();
   int getArrowSize();
 
-  void setAnimation(long _duration);
+  void setModus(int _modus);
+  void resetModus();
+  void setWaveColors(CRGB _wColor1, CRGB _wColor2);
 
 
 
@@ -42,13 +42,26 @@ class LED_Wrapper
     CRGB color = CRGB::BlueViolet;
     int arrowSize;
     bool clw;
-    int* arrows;
     CRGB scheme[NUM_LEDS];
+
+    //Hue animation
+    CRGB hueAnim[NUM_LEDS];
+    long pTime;
+
+    //Animation General
+    int modus = 0;
 
     //Rainbow Animation
     long oTime;
-    long duration;
-    bool animation;
+    bool _rainbow;
+    void rainbow(long _duration);
+
+    //Wave Animation
+    long wTime;
+    bool _wave;
+    CRGB wColor1 = CRGB::White;
+    CRGB wColor2 = CRGB::Black;
+    void wave(long _duration);
 
 
 
