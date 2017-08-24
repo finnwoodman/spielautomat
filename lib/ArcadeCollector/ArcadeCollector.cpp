@@ -2,6 +2,7 @@
 
 #include "Arduino.h"
 #include "ArcadeCollector.h"
+#include "LED_Wrapper.h"
 #include "Arcade.h"
 
 //Class Rotary
@@ -15,6 +16,10 @@ ArcadeCollector::ArcadeCollector(int _arcades)
   if (debug == true ){
     Serial.println("ArcadeCollector ::: initial Creation()");
   }
+}
+void ArcadeCollector::attachLine(LED_Wrapper* _line){
+  attach = true;
+  line = _line;
 }
 
 void ArcadeCollector::add(int _pin1, int _pin2){
@@ -40,6 +45,31 @@ void ArcadeCollector::refresh(){
         if (i != active){
           bus[i].reset();
           active = i;
+          if (attach == true) {
+            switch (active) {
+              case 0:{
+                line -> tint(CRGB::White);
+                break;
+                }
+              case 1:{
+                line -> tint(CRGB::Yellow);
+                break;
+                }
+              case 2:{
+                line -> tint(CRGB::Green);
+                break;
+                }
+              case 3:{
+                line -> tint(CRGB::Blue);
+                break;
+                }
+              case 4:{
+                line -> tint(CRGB::Red);
+                break;
+                }
+              default: break;
+            }
+          }
         }
     }
   }

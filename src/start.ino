@@ -35,6 +35,7 @@ void setup(){
   arcadeBus.add(28, 27);
   arcadeBus.add(26, 25);
   arcadeBus.add(24,12);
+  arcadeBus.attachLine(&Line);
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
   //Rotary switches
@@ -67,8 +68,6 @@ void setup(){
   Line.addArrow(50, CRGB::Green);
   Line.addArrow(73,CRGB::White);
 
-
-  Line.tint(CRGB::Yellow);
   Line.refresh();
 
 

@@ -27,6 +27,7 @@ LED_Wrapper::LED_Wrapper(){
   FastLED.addLeds<WS2812, PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(5);
   clw = true;
+  modus = 0;
   arrowSize = 0;
 
 
