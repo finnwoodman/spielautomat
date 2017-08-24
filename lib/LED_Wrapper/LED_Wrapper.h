@@ -32,6 +32,7 @@ class LED_Wrapper
   void resetModus();
   void setWaveColors(CRGB _wColor1, CRGB _wColor2);
   void rainbow(long _duration);
+  void rainbowSequence(long _duration);
 
 
   private:
@@ -42,6 +43,7 @@ class LED_Wrapper
     CRGB color = CRGB::BlueViolet;
 
   protected:
+    int pos;
 
     int arrowSize;
     bool clw;

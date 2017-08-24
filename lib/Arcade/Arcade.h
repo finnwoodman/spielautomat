@@ -1,7 +1,9 @@
 #ifndef Arcade_h
 #define Arcade_h
 
+
 #include "Arduino.h"
+#include "LED_Wrapper.h"
 
 class Arcade
 {
@@ -17,7 +19,10 @@ class Arcade
     void blink_off();
     void setStatus(boolean _status);
     void reset();
+    void attachLine(LED_Wrapper* _line, CRGB _color);
     boolean getStatus();
+    CRGB color = CRGB::White;
+
 
   private:
     boolean status = false;
@@ -26,6 +31,8 @@ class Arcade
     int pin2;
     //Debug
     boolean debug = false;
+    LED_Wrapper* line;
+    bool attach = false;
 
   protected:
     boolean led = false;

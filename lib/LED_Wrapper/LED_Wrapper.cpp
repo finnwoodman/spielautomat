@@ -120,6 +120,7 @@ void LED_Wrapper::report(boolean _debug){
  * @param _color Color as CRGB::_name_of_color
  */
 void LED_Wrapper::tint(CRGB _color){
+  if (modus == 0){
   for (int i = 0; i < NUM_LEDS; i++) {
     if (scheme[i] == color) {
         scheme[i] = _color;
@@ -137,6 +138,13 @@ void LED_Wrapper::tint(CRGB _color){
   color = _color;
 }
 
+  if (modus == 2){
+    setWaveColors(color, _color);
+    color = _color;
+    _wave = true;
+  }
+}
+
 void LED_Wrapper::refresh(){
   switch (modus) {
     case 0: break;
@@ -148,6 +156,10 @@ void LED_Wrapper::refresh(){
             wave(50);
             break;
             }
+    case 3: {
+            rainbowSequence(50);
+            break;
+            }
     default: break;
   }
   Serial.print("Modus Refresh: ");
@@ -156,6 +168,7 @@ void LED_Wrapper::refresh(){
 }
 
 void LED_Wrapper::line(int _pos, int _max ){
+pos = _pos;
 if (modus == 0){
     if (clw == true){
     int _tmp = map(_pos, 0, _max, 0, 100);
@@ -207,6 +220,24 @@ void LED_Wrapper::rainbow(long _duration){
     }
   }
 }
+void LED_Wrapper::rainbowSequence(long _duration){
+  Serial.print("Rainbow: ");
+  Serial.println(modus);
+  if (_rainbow == true){
+    fill_rainbow( leds, NUM_LEDS ,0, 20);
+    _rainbow = false;
+    oTime = millis();
+  }
+  else{
+    if ((millis()-oTime) > _duration) {
+      leds[pos] = leds[0];
+      for (int i = 0; i < pos; i++) {
+        leds[i] = leds[i+1];
+      }
+    oTime = millis();
+    }
+  }
+}
 
 void LED_Wrapper::wave(long _duration){
   Serial.print("Wave: ");
@@ -248,6 +279,10 @@ void LED_Wrapper::setModus(int _modus){
               _wave = true;
               break;
               }
+      case 3: {
+              _rainbow = true;
+              break;
+               }
       default: break;
     }
   }

@@ -30,12 +30,11 @@ SolSound solenoid(A2);
 void setup(){
   Serial.begin(9600);
   //Arcadebus
-  arcadeBus.add(32, 31);
-  arcadeBus.add(30, 29);
-  arcadeBus.add(28, 27);
-  arcadeBus.add(26, 25);
-  arcadeBus.add(24,12);
-  arcadeBus.attachLine(&Line);
+  arcadeBus.add(32, 31, &Line, CRGB::Red);
+  arcadeBus.add(30, 29, &Line, CRGB::Green);
+  arcadeBus.add(28, 27, &Line, CRGB::Yellow);
+  arcadeBus.add(26, 25, &Line, CRGB::Blue);
+  arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
   //Rotary switches
@@ -51,7 +50,7 @@ void setup(){
 
   //Rotary
   rotary.autoDecreaseSteps(150);
-  rotary.setMax(3);
+  rotary.setMax(10);
   rotary.report(false);
   //Coins
   Coin.report(false);

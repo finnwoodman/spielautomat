@@ -2,7 +2,6 @@
 
 #include "Arduino.h"
 #include "ArcadeCollector.h"
-#include "LED_Wrapper.h"
 #include "Arcade.h"
 
 //Class Rotary
@@ -17,15 +16,27 @@ ArcadeCollector::ArcadeCollector(int _arcades)
     Serial.println("ArcadeCollector ::: initial Creation()");
   }
 }
-void ArcadeCollector::attachLine(LED_Wrapper* _line){
-  attach = true;
-  line = _line;
-}
 
 void ArcadeCollector::add(int _pin1, int _pin2){
 
   if (index < arcades){
     bus[index].add(_pin1, _pin2);
+    if (debug == true ){
+      bus[index].report(true);
+      Serial.print("ArcadeCollector ::: added Arcade(");
+    }
+    else {
+      bus[index].report(false);
+    }
+      index++;
+  }
+}
+
+void ArcadeCollector::add(int _pin1, int _pin2, LED_Wrapper* _line, CRGB _color){
+  if (index < arcades){
+    bus[index].add(_pin1, _pin2);
+    bus[index].attachLine(_line, _color);
+
     if (debug == true ){
       bus[index].report(true);
       Serial.print("ArcadeCollector ::: added Arcade(");
@@ -45,31 +56,6 @@ void ArcadeCollector::refresh(){
         if (i != active){
           bus[i].reset();
           active = i;
-          if (attach == true) {
-            switch (active) {
-              case 0:{
-                line -> tint(CRGB::White);
-                break;
-                }
-              case 1:{
-                line -> tint(CRGB::Yellow);
-                break;
-                }
-              case 2:{
-                line -> tint(CRGB::Green);
-                break;
-                }
-              case 3:{
-                line -> tint(CRGB::Blue);
-                break;
-                }
-              case 4:{
-                line -> tint(CRGB::Red);
-                break;
-                }
-              default: break;
-            }
-          }
         }
     }
   }

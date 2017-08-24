@@ -1,5 +1,7 @@
 #include "Arduino.h"
 #include "Arcade.h"
+#include "LED_Wrapper.h"
+
 
 //Class Arcade
 //Max von Elverfeldt - RaktiPiepEkti - 2017
@@ -17,6 +19,11 @@ Arcade::Arcade()
 {
 }
 
+void Arcade::attachLine(LED_Wrapper* _line, CRGB _color){
+  attach = true;
+  line = _line;
+  color = _color;
+}
 void Arcade::add(int _pin1, int _pin2){
   pinMode(_pin1, INPUT);
   pinMode(_pin2, OUTPUT);
@@ -39,6 +46,7 @@ void Arcade::refresh(){
 
 	//Erster Aufruf
 	if ((_last == LOW) && (status == false)){
+    line -> tint(color);
 		status = true;
 		ostatus = false;
 		activate();
@@ -54,17 +62,6 @@ void Arcade::refresh(){
 		}
 	}
 
-	//kein Aufruf
-	/*if ((_last==HIGH) && (status == true)){
-		status = false;
-		if (debug == true) {
-			Serial.print ("ARCADE LIB ::: refresh() -> Pin");
-			Serial.print(pin1);
-			Serial.print(" = ");
-			Serial.print(status);
-			Serial.println(".");
-		}
-	}*/
 
 if ((blink == true) && (ostatus == true)){
 			if ((millis() - oTime) > interval){
