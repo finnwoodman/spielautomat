@@ -18,7 +18,7 @@ class LED_Wrapper
   void report(boolean _debug);
   void tint(CRGB _color);
   void refresh();
-  void line(int _pos, int _max, CRGB _color);
+  void line(int _pos, int _max);
   void counterClockwise();
   void clockwise();
 
@@ -31,30 +31,28 @@ class LED_Wrapper
   void setModus(int _modus);
   void resetModus();
   void setWaveColors(CRGB _wColor1, CRGB _wColor2);
-
+  void rainbow(long _duration);
 
 
   private:
     CRGB leds[NUM_LEDS];
     boolean debug = false;
+    //Animation General
+    int modus = 0;
+    CRGB color = CRGB::BlueViolet;
 
   protected:
-    CRGB color = CRGB::BlueViolet;
+
     int arrowSize;
     bool clw;
     CRGB scheme[NUM_LEDS];
 
-    //Hue animation
-    CRGB hueAnim[NUM_LEDS];
-    long pTime;
 
-    //Animation General
-    int modus = 0;
 
     //Rainbow Animation
     long oTime;
-    bool _rainbow;
-    void rainbow(long _duration);
+    bool _rainbow = true;
+
 
     //Wave Animation
     long wTime;

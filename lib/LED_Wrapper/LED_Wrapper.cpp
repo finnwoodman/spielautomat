@@ -120,19 +120,41 @@ void LED_Wrapper::report(boolean _debug){
  */
 void LED_Wrapper::tint(CRGB _color){
   for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = _color;
+    if (scheme[i] == color) {
+        scheme[i] = _color;
+    }
+    else {
+      int _tmp = i + arrowSize-1;
+      fill_gradient_RGB(scheme, _tmp, scheme[_tmp], _tmp - arrowSize, _color );
+      fill_gradient_RGB(scheme, _tmp, scheme[_tmp], _tmp + arrowSize, _color);
+      i += 5;
+    }
   }
+  for (int i = NUM_LEDS; i > 0; i--) {
+    leds[i] = scheme[i];
+  }
+  color = _color;
 }
 
 void LED_Wrapper::refresh(){
   switch (modus) {
-    case 1: rainbow(50);
-    case 2: wave(50);
+    case 0: break;
+    case 1: {
+            rainbow(50);
+            break;
+            }
+    case 2: {
+            wave(50);
+            break;
+            }
+    default: break;
   }
+  Serial.print("Modus Refresh: ");
+  Serial.println(modus);
   FastLED.show();
 }
 
-void LED_Wrapper::line(int _pos, int _max, CRGB _color ){
+void LED_Wrapper::line(int _pos, int _max ){
 if (modus == 0){
     if (clw == true){
     int _tmp = map(_pos, 0, _max, 0, 100);
@@ -167,6 +189,8 @@ if (modus == 0){
 }
 
 void LED_Wrapper::rainbow(long _duration){
+  Serial.print("Rainbow: ");
+  Serial.println(modus);
   if (_rainbow == true){
     fill_rainbow( leds, NUM_LEDS ,0, 20);
     _rainbow = false;
@@ -184,6 +208,8 @@ void LED_Wrapper::rainbow(long _duration){
 }
 
 void LED_Wrapper::wave(long _duration){
+  Serial.print("Wave: ");
+  Serial.println(modus);
   if (_wave == true){
     for (int i = 0; i < 10; i++) {
       fill_gradient_RGB(leds, (i*10), wColor1, (i*10)+5, wColor2 );
@@ -212,10 +238,20 @@ void LED_Wrapper::setModus(int _modus){
   if (modus != _modus) {
     modus = _modus;
     switch (_modus) {
-      case 1: _rainbow = true;
-      case 2: _wave = true;
+      case 0: break;
+      case 1: {
+              _rainbow = true;
+              break;
+              }
+      case 2: {
+              _wave = true;
+              break;
+              }
+      default: break;
     }
   }
+
+
 }
 
 void LED_Wrapper::resetModus(){
