@@ -20,10 +20,10 @@ RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
 AgeSelector sAge(A6, A7);
 Toggle tPilot(11);
-Voltmeter vMeter(A3);
+Voltmeter vMeter(A2);
 CoinAcceptor Coin;
 Rotary rotary(33,34);
-SolSound solenoid(A2);
+SolSound solenoid(A3);
 
 
 
@@ -51,7 +51,7 @@ void setup(){
   //Rotary
   rotary.autoDecreaseSteps(150);
   rotary.setMax(10);
-  rotary.report(false);
+  rotary.report(true);
   //Coins
   Coin.report(false);
   attachInterrupt(10, interrupt ,RISING);
@@ -71,7 +71,7 @@ void setup(){
 
 
   //GameData
-  Games.report(true);
+  Games.report(false);
   Games.init(false);
   Games.grab();
   //Games.print(0);
@@ -89,7 +89,7 @@ void loop(){
   rDuration.refresh();
   sAge.refresh();
   tPilot.refresh();
-  vMeter.set(map(rotary.getSpeed(), 0,200,0,255));
+  vMeter.set(map(rotary.getSpeed(), 0,100,0,255));
   vMeter.refresh();
   rotary.refresh();
   solenoid.refresh();

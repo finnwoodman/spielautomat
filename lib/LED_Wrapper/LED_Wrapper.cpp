@@ -162,8 +162,6 @@ void LED_Wrapper::refresh(){
             }
     default: break;
   }
-  Serial.print("Modus Refresh: ");
-  Serial.println(modus);
   FastLED.show();
 }
 
@@ -203,8 +201,6 @@ if (modus == 0){
 }
 
 void LED_Wrapper::rainbow(long _duration){
-  Serial.print("Rainbow: ");
-  Serial.println(modus);
   if (_rainbow == true){
     fill_rainbow( leds, NUM_LEDS ,0, 20);
     _rainbow = false;
@@ -221,8 +217,6 @@ void LED_Wrapper::rainbow(long _duration){
   }
 }
 void LED_Wrapper::rainbowSequence(long _duration){
-  Serial.print("Rainbow: ");
-  Serial.println(modus);
   if (_rainbow == true){
     fill_rainbow( leds, NUM_LEDS ,0, 20);
     _rainbow = false;
@@ -240,8 +234,6 @@ void LED_Wrapper::rainbowSequence(long _duration){
 }
 
 void LED_Wrapper::wave(long _duration){
-  Serial.print("Wave: ");
-  Serial.println(modus);
   if (_wave == true){
     for (int i = 0; i < 10; i++) {
       fill_gradient_RGB(leds, (i*10), wColor1, (i*10)+5, wColor2 );

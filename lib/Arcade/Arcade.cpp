@@ -46,7 +46,7 @@ void Arcade::refresh(){
 
 	//Erster Aufruf
 	if ((_last == LOW) && (status == false)){
-    line -> tint(color);
+
 		status = true;
 		ostatus = false;
 		activate();
