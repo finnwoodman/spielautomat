@@ -14,10 +14,10 @@ Purpose: Transfer table content of an CSV into an array.
 */
 
 /**
- * Constructor for CSV Library.
- * @param _lines  Number of lines to read in the CSV.
- * @param _fields Number of integer fields to read in each line.
- */
+* Constructor for CSV Library.
+* @param _lines  Number of lines to read in the CSV.
+* @param _fields Number of integer fields to read in each line.
+*/
 
 GameData::GameData( int _lines, int _fields){
   FIELDS = _fields;
@@ -41,69 +41,73 @@ GameData::GameData( int _lines, int _fields){
 void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _cat){
   int _game[10];
   int _pointer = 0;
-    for (int i = 0; i < LINES; i++) {
-      if (debug == true){
-        Serial.print("/");
-      }
-      if ((fields[i][0] <= _team) && (fields[i][1] >= _team)) {
-          if ((fields[i][2] <= _duration) && (fields[i][3] >= _duration)) {
-            if ((fields[i][4] <= _minAge) && (fields[i][5] >= _maxAge)) {
-              if (fields[i][5 + _cat] == 1) {
-                _game[_pointer] = i;
-                if (debug == true){
-                  Serial.print("*");
-                }
-                if (_pointer == 9) {
-                  break;
-                }
-                _pointer++;
-              }
-            }
-        }
-      }
-    }
+  for (int i = 0; i < LINES; i++) {
     if (debug == true){
-      Serial.println();
+      Serial.print("/");
     }
-    if (_pointer != 0) {
-        if (debug == true){
-          Serial.println("GameData:::Search()::Found several games :-)");
-        }
-      _pointer = random(0, _pointer+1);
-    }
-          if (debug == true){
-            Serial.print("Selected::: ");
-            Serial.println(_game[_pointer]);
+    if ((fields[i][0] <= _team) && (fields[i][1] >= _team)) {
+      if ((fields[i][2] <= _duration) && (fields[i][3] >= _duration)) {
+        if ((fields[i][4] <= _minAge) && (fields[i][5] >= _maxAge)) {
+          if (fields[i][5 + _cat] == 1) {
+            _game[_pointer] = i;
+            if (debug == true){
+              Serial.print("*");
+            }
+            if (_pointer == 9) {
+              break;
+            }
+            _pointer++;
           }
-    game = _game[_pointer];
+        }
+      }
+    }
+  }
+  if (debug == true){
+    Serial.println();
+  }
+  if (_pointer != 0) {
+    if (debug == true){
+      Serial.println("GameData:::Search()::Found several games :-)");
+    }
+    _pointer = random(0, _pointer+1);
+  }
+  if (debug == true){
+    Serial.print("Selected::: ");
+    Serial.println(_game[_pointer]);
+  }
+  game = _game[_pointer];
 }
 
 void GameData::print(){
-  String sdFiName = "test.bin";
-  const char * c = sdFiName.c_str();
-  File sdCardFile = sd.open (c, FILE_READ);
-  while (sdCardFile.available()) {
-    Serial.println("Printing");
-    printer.printBitmap(384, 1128, dynamic_cast<Stream*>(&sdCardFile));
+  if (hasPrinter == true) {
+    String sdFiName = "test.bin";
+    const char * c = sdFiName.c_str();
+    File sdCardFile = sd.open (c, FILE_READ);
+    while (sdCardFile.available()) {
+      Serial.println("Printing");
+      printer.printBitmap(384, 1128, dynamic_cast<Stream*>(&sdCardFile));
+    }
+    sdCardFile.close();
+    printer.feed(10);
   }
-  sdCardFile.close();
-  printer.feed(10);
 }
 
 void GameData::print(int _game){
-  Serial.println("NAME ->");
-  Serial.println(files[_game]);
-  String sdFiName = files[_game];
-  sdFiName+=".bin";
-  Serial.println(sdFiName);
-  const char * c = sdFiName.c_str();
-  File sdCardFile = sd.open (c, FILE_READ);
-  while (sdCardFile.available()) {
-    Serial.println("Printing");
-    printer.printBitmap(images[_game][0], images[_game][1], dynamic_cast<Stream*>(&sdCardFile));
+  if (hasPrinter == true) {
+    Serial.println("NAME ->");
+    Serial.println(files[_game]);
+    String sdFiName = files[_game];
+    sdFiName+=".bin";
+    Serial.println(sdFiName);
+    const char * c = sdFiName.c_str();
+    File sdCardFile = sd.open (c, FILE_READ);
+    while (sdCardFile.available()) {
+      Serial.println("Printing");
+      printer.printBitmap(images[_game][0], images[_game][1], dynamic_cast<Stream*>(&sdCardFile));
+    }
+    sdCardFile.close();
+    printer.feed(10);
   }
-  sdCardFile.close();
-  printer.feed(10);
 }
 
 void GameData::grab(){
@@ -112,8 +116,8 @@ void GameData::grab(){
   grabImages();
 }
 /**
- * Transfers CSV data into an 2D array.
- */
+* Transfers CSV data into an 2D array.
+*/
 void GameData::grabData(){
   if (debug == true) {
     Serial.println("GameData ::: grabData() ::Started.");
@@ -141,16 +145,16 @@ void GameData::grabData(){
 }
 
 /**
- * Returns the currently selectec game.
- * @return Integer pointing to game in table.
- */
+* Returns the currently selectec game.
+* @return Integer pointing to game in table.
+*/
 int GameData::getGame(){
   return game;
 }
 
 /**
- * Transfers the image sizes from csv to 2D array images[][]
- */
+* Transfers the image sizes from csv to 2D array images[][]
+*/
 void GameData::grabImages(){
   if (debug == true) {
     Serial.println("GameData ::: grabImages() ::Started.");
@@ -163,11 +167,11 @@ void GameData::grabImages(){
   for (int i = 0; i < LINES; i++) {
     if (debug == true) {
       if (_tmp == true){
-      Serial.print("GameData ::: grabImages() :: ");
-      _tmp = false;
+        Serial.print("GameData ::: grabImages() :: ");
+        _tmp = false;
       }
       else {
-      Serial.print("/");
+        Serial.print("/");
       }
     }
     int numBuffer = 0;
@@ -185,8 +189,8 @@ void GameData::grabImages(){
 }
 
 /**
- * Transfers the image file's names to an array named files.
- */
+* Transfers the image file's names to an array named files.
+*/
 void GameData::grabFiles(){
   if (debug == true) {
     Serial.println("GameData ::: grabFiles() ::Started.");
@@ -199,11 +203,11 @@ void GameData::grabFiles(){
   for (int i = 0; i < LINES; i++) {
     if (debug == true) {
       if (_tmp == true){
-      Serial.print("GameData ::: grabFiles() :: ");
-      _tmp = false;
+        Serial.print("GameData ::: grabFiles() :: ");
+        _tmp = false;
       }
       else {
-      Serial.print("/");
+        Serial.print("/");
       }
     }
     csv.gotoField(13);
@@ -217,8 +221,8 @@ void GameData::grabFiles(){
 }
 
 /*
- * Init SD card and file
- */
+* Init SD card and file
+*/
 void GameData::init(){
   initSdCard();
   initSdFile();
@@ -228,8 +232,8 @@ void GameData::init(){
 }
 
 /*
- * Init SD card and file
- */
+* Init SD card and file
+*/
 void GameData::init(boolean _printer){
   hasPrinter = _printer;
   initSdCard();
@@ -248,8 +252,8 @@ void GameData::initPrinter(){
   }
 }
 /**
- * Open SD file once.
- */
+* Open SD file once.
+*/
 void GameData::initSdFile()
 {
   if (!csv.open(FILENAME, O_RDWR | O_CREAT)) {
@@ -263,13 +267,13 @@ void GameData::initSdFile()
     if (debug == true){
       Serial.println("GameData ::: initSdFile() ::Successfully opened file");
     }
-  csv.gotoBeginOfFile();
-}
+    csv.gotoBeginOfFile();
+  }
 }
 
 /**
- * Init SD card first.
- */
+* Init SD card first.
+*/
 void GameData::initSdCard(){
   if (!sd.begin())
   {
@@ -285,21 +289,21 @@ void GameData::initSdCard(){
   }
 }
 /**
- * Enable / Disable report
- * @param _debug [description]
- */
+* Enable / Disable report
+* @param _debug [description]
+*/
 void GameData::report(boolean _debug){
   debug = _debug;
   if (debug == true){
-  if (!Serial){
-    Serial.begin(9600);
+    if (!Serial){
+      Serial.begin(9600);
+    }
   }
-}
 }
 
 /**
- * Print all transferred data.
- */
+* Print all transferred data.
+*/
 void GameData::printData(){
   report(true);
   for (int i = 0; i < LINES; i++) {

@@ -2,6 +2,7 @@
 #define Rotary_h
 
 #include "Arduino.h"
+#include "Voltmeter.h"
 
 class Rotary
 {
@@ -23,6 +24,8 @@ class Rotary
     int getSteps();
     int getMaxSteps();
     int getSpeed();
+
+    void attachVMeter(Voltmeter* _vMeter, int _vMax);
   ;
 
 
@@ -48,6 +51,10 @@ class Rotary
     long interval = 0;
     long oTime = 0;
     long pTime = 0;
+
+    bool vOutput = false;
+    int vMax = 50;
+    Voltmeter* vMeter;
 
 };
 

@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "Rotary.h"
-
+#include "Voltmeter.h"
 
 //Class Rotary
 //Max von Elverfeldt - RaktiPiepEkti - 2017
@@ -54,7 +54,7 @@ int Rotary::getMaxSteps(){
 }
 
 void Rotary::measureSpeed(){
-  if ((millis() - pTime) > 1000) {
+  if ((millis() - pTime) > 250) {
     speed = getSteps();
     if ((speed-oSpeed)>=0) {
         speed -= oSpeed;
@@ -74,7 +74,9 @@ void Rotary::measureSpeed(){
       Serial.println();
     }
   }
-
+if (vOutput == true){
+  vMeter -> set(map(getSpeed(), 0,vMax,0,255));
+}
 
 }
 
@@ -238,4 +240,10 @@ void Rotary::autoDecreaseSteps(long _interval){
     Serial.print(_interval);
     Serial.println("ms");
   }
+}
+
+void Rotary::attachVMeter(Voltmeter* _vMeter, int _vMax){
+  vMax = _vMax;
+  vMeter = _vMeter;
+  vOutput = true;
 }

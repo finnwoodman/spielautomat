@@ -37,6 +37,7 @@ void setup(){
   arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
+
   //Rotary switches
   rPlayers.report(false);
   rDuration.report(false);
@@ -49,9 +50,10 @@ void setup(){
   vMeter.report(false);
 
   //Rotary
-  rotary.autoDecreaseSteps(150);
-  rotary.setMax(10);
+  rotary.autoDecreaseSteps(5);
+  rotary.setMax(20);
   rotary.report(true);
+  rotary.attachVMeter(&vMeter, 60);
   //Coins
   Coin.report(false);
   attachInterrupt(10, interrupt ,RISING);
@@ -66,6 +68,8 @@ void setup(){
   Line.addArrow(26, CRGB::Orange);
   Line.addArrow(50, CRGB::Green);
   Line.addArrow(73,CRGB::White);
+  Line.setWaveColors(CRGB::Cyan, CRGB::BlueViolet);
+
 
   Line.refresh();
 
@@ -75,6 +79,9 @@ void setup(){
   Games.init(false);
   Games.grab();
   //Games.print(0);
+
+  solenoid.adjust(20);
+  solenoid.sequence(5, 500);
 
   //Test Section
   //arcadeBus.test(500);
@@ -89,9 +96,8 @@ void loop(){
   rDuration.refresh();
   sAge.refresh();
   tPilot.refresh();
-  vMeter.set(map(rotary.getSpeed(), 0,100,0,255));
-  vMeter.refresh();
   rotary.refresh();
+  vMeter.refresh();
   solenoid.refresh();
 
   if (rotary.getSteps() > rotary.getMaxSteps()) {
