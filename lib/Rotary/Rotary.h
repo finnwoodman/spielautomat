@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "Voltmeter.h"
+#include "LED_Wrapper.h"
 
 class Rotary
 {
@@ -55,6 +56,7 @@ class Rotary
     bool vOutput = false;
     int vMax = 50;
     Voltmeter* vMeter;
+
 
 };
 

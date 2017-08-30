@@ -1,6 +1,7 @@
 #include "Arduino.h"
 #include "Rotary.h"
 #include "Voltmeter.h"
+#include "LED_Wrapper.h"
 
 //Class Rotary
 //Max von Elverfeldt - RaktiPiepEkti - 2017
@@ -17,6 +18,7 @@ Rotary::Rotary(int _pin1, int _pin2)
   max = 10;
 
 }
+
 /**
  * Set the ultimate needed cycles.
  * @param _max Max number of turns.

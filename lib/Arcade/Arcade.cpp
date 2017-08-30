@@ -24,6 +24,7 @@ void Arcade::attachLine(LED_Wrapper* _line, CRGB _color){
   line = _line;
   color = _color;
 }
+
 void Arcade::add(int _pin1, int _pin2){
   pinMode(_pin1, INPUT);
   pinMode(_pin2, OUTPUT);
@@ -41,13 +42,15 @@ void Arcade::refresh(){
 			ostatus = true;
 			oTime = millis();
 		}
-
 	}
 
 	//Erster Aufruf
 	if ((_last == LOW) && (status == false)){
 		status = true;
 		ostatus = false;
+    if (attach == true){
+      line -> tint(color);
+    }
 		activate();
 		if (debug == true) {
 			Serial.print ("ARCADE LIB ::: refresh() -> Pin");
@@ -59,9 +62,6 @@ void Arcade::refresh(){
 		if (blink == true){
 			oTime = millis();
 		}
-    if (attach == true){
-      line -> tint(color);
-    }
 	}
 
 

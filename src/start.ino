@@ -52,7 +52,7 @@ void setup(){
   //Rotary
   rotary.autoDecreaseSteps(50);
   rotary.setMax(20);
-  rotary.report(true);
+  rotary.report(false);
   rotary.attachVMeter(&vMeter, 60);
   //Coins
   Coin.report(false);

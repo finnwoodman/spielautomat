@@ -115,11 +115,13 @@ void LED_Wrapper::report(boolean _debug){
   Serial.println("LED_Wrapper ::: report() :: ACTIVE");
 }
 
+
 /**
  * Change colour of all LEDs.
  * @param _color Color as CRGB::_name_of_color
  */
 void LED_Wrapper::tint(CRGB _color){
+  if (color != _color){
   if (modus == 0){
   for (int i = 0; i < NUM_LEDS; i++) {
     if (scheme[i] == color) {
@@ -132,18 +134,22 @@ void LED_Wrapper::tint(CRGB _color){
       i += 5;
     }
   }
+
   for (int i = NUM_LEDS; i > 0; i--) {
     leds[i] = scheme[i];
   }
+
   color = _color;
 }
 
-  if (modus == 2){
-    setWaveColors(color, _color);
+/*if (modus == 2){
+    setWaveColors(_color, CRGB::White);
     color = _color;
-    _wave = true;
-  }
+    setModus(2);
+  }*/
 }
+}
+
 
 void LED_Wrapper::refresh(){
   switch (modus) {
@@ -255,7 +261,7 @@ void LED_Wrapper::wave(long _duration){
 
 void LED_Wrapper::setWaveColors(CRGB _wColor1, CRGB _wColor2){
   wColor1 = _wColor1;
-  wColor2 = wColor2;
+  wColor2 = _wColor2;
 }
 
 void LED_Wrapper::setModus(int _modus){
