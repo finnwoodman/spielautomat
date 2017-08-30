@@ -31,8 +31,8 @@ void setup(){
   Serial.begin(9600);
   //Arcadebus
   arcadeBus.add(32, 31, &Line, CRGB::Red);
-  arcadeBus.add(30, 29, &Line, CRGB::Green);
-  arcadeBus.add(28, 27, &Line, CRGB::Yellow);
+  arcadeBus.add(30, 29, &Line, CRGB::Yellow);
+  arcadeBus.add(28, 27, &Line, CRGB::Green);
   arcadeBus.add(26, 25, &Line, CRGB::Blue);
   arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
@@ -50,7 +50,7 @@ void setup(){
   vMeter.report(false);
 
   //Rotary
-  rotary.autoDecreaseSteps(5);
+  rotary.autoDecreaseSteps(50);
   rotary.setMax(20);
   rotary.report(true);
   rotary.attachVMeter(&vMeter, 60);
@@ -78,7 +78,7 @@ void setup(){
   Games.report(false);
   Games.init(false);
   Games.grab();
-  //Games.print(0);
+  Games.print(0);
 
   solenoid.adjust(20);
   solenoid.sequence(5, 500);

@@ -46,7 +46,6 @@ void Arcade::refresh(){
 
 	//Erster Aufruf
 	if ((_last == LOW) && (status == false)){
-
 		status = true;
 		ostatus = false;
 		activate();
@@ -60,6 +59,9 @@ void Arcade::refresh(){
 		if (blink == true){
 			oTime = millis();
 		}
+    if (attach == true){
+      line -> tint(color);
+    }
 	}
 
 
