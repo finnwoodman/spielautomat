@@ -18,7 +18,8 @@ LED_Wrapper Line;
 ArcadeCollector arcadeBus(5);
 RotarySwitch rPlayers(A8, 10);
 RotarySwitch rDuration(A9, 10);
-AgeSelector sAge(A6, A7);
+AgeSelector minAge(A7);
+AgeSelector maxAge(A6);
 Toggle tPilot(11);
 Voltmeter vMeter(A2);
 CoinAcceptor Coin;
@@ -43,13 +44,19 @@ void setup(){
   int _players [] = {1,2,3,4,5,6,7,8,9,10};
   rPlayers.addMapping(_players);
   rDuration.report(false);
-  int _duration [] = {0,1,3,5,10,15,20,30,45,60};
+  int _duration [] = {60,45,30,20,15,10,5,3,1,0};
   rDuration.addMapping(_duration);
   //AgeSelector
-  sAge.setThreshold(5);
-  sAge.setSteps(0 , 200 , 400, 600, 800, 900, 1023);
-  sAge.setAges(3 , 5, 8, 12, 16);
-  sAge.report(false);
+  minAge.setThreshold(2);
+  minAge.setSteps(0 , 20 , 50, 130, 200, 350, 750, 1023);
+  minAge.setAges(30, 20, 15, 10, 7, 5, 3);
+  minAge.report(false);
+
+  maxAge.setThreshold(2);
+  maxAge.setSteps(0 , 15 , 50, 120, 220, 400, 750, 1023);
+  maxAge.setAges(99, 60, 30, 20, 15, 10, 7);
+  maxAge.report(false);
+
   //Voltmeter
   vMeter.report(false);
 
@@ -98,14 +105,15 @@ void loop(){
   arcadeBus.refresh();
   rPlayers.refresh();
   rDuration.refresh();
-  sAge.refresh();
+  minAge.refresh();
+  maxAge.refresh();
   tPilot.refresh();
   rotary.refresh();
   vMeter.refresh();
   solenoid.refresh();
   Line.line(rotary.getSteps(), rotary.getMaxSteps());
   Line.refresh();
-  if (Line.getModus() == 1) {
+/*  if (Line.getModus() == 1) {
     if (Coin.getBudget(0.2) == true) {
     Serial.println("++++ GAME BEGIN++++");
     Serial.print("Personen: " );
@@ -113,16 +121,16 @@ void loop(){
     Serial.print("Minuten: " );
     Serial.println(rDuration.getMapping());
     Serial.print("Alter von: " );
-    Serial.print(sAge.getMin());
+    Serial.print(minAge.getMin());
     Serial.print(" bis " );
-    Serial.println(sAge.getMax());
+    Serial.println(minAge.getMax());
     Serial.print("Kategorie: " );
     Serial.println(arcadeBus.getActive());
     Serial.println("++++ GAME END ++++");
     Coin.level();
-    // Games.search(rPlayers.getPosition(), rDuration.getPosition() , sAge., int maxAge, int _cat);
+    // Games.search(rPlayers.getPosition(), rDuration.getPosition() , minAge., int maxAge, int _cat);
   }
-}
+}*/
 }
 
 void interrupt(){

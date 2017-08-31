@@ -6,14 +6,14 @@
 
 //Comment: E(Blue or/and White) = GND, IN(Yellow, White) = VIN, OUT(Blue, Yellow) = A8, A9
 
-AgeSelector::AgeSelector(int _pin1, int _pin2)
+AgeSelector::AgeSelector(int _pin1)
 {
   pinMode(_pin1, INPUT);
-	pinMode(_pin2, INPUT);
+
   pin1 = _pin1;
-  pin2 = _pin2;
+
   value1 = analogRead(pin1);
-  value2 = analogRead(pin2);
+
   adapt = false;
   buffer = 5;
   debug = false;
@@ -23,59 +23,40 @@ AgeSelector::AgeSelector(int _pin1, int _pin2)
 void AgeSelector::refresh(){
   if ((millis()-oTime)>100){
   ovalue1 = value1;
-  ovalue2 = value2;
   value1 = analogRead(pin1);
-  value2 = analogRead(pin2);
   if ((ovalue1 <= (value1 - buffer)) || (ovalue1 >= (value1 + buffer))){
     if (adapt == false){
-      min = value1;
+      age = value1;
     }
     else {
-      min = getCat(value1);
+      age = getCat(value1);
     }
     if (debug == true){
-      Serial.print("AgeSelector::newMin():Category:");
-      Serial.println(min);
+      Serial.print("AgeSelector::newage(): ");
+      Serial.print(value1);
+      Serial.print(" -> ");
+      Serial.println(getCat(value1));
     }
-  }
-  if ((ovalue2 <= (value2 - buffer)) || (ovalue2 >= (value2 + buffer))){
-    if (adapt == false){
-      max = value2;
-    }
-    else {
-      max = getCat(value2);
-    }
-    if (debug == true){
-      Serial.print("AgeSelector::newMax():Category:");
-      Serial.println(max);
-    }
-  }
-  if (min > max){
-    int _tmp = max;
-    max = min;
-    min = _tmp;
   }
   if(debug == true){
     if (value1 =! ovalue1){
       Serial.println(value1);
-    }
-    if (value2 =! ovalue2){
-      Serial.println(value2);
     }
   }
   oTime = millis();
   }
 }
 
-void AgeSelector::setSteps(int _min, int _step1,int _step2, int _step3, int _step4, int _step5, int _max){
+void AgeSelector::setSteps(int _age, int _step1,int _step2, int _step3, int _step4, int _step5,int _step6, int _max){
     adapt = true;
-    steps[0] = _min;
+    steps[0] = _age;
     steps[1] = _step1;
     steps[2] = _step2;
     steps[3] = _step3;
     steps[4] = _step4;
     steps[5] = _step5;
-    steps[6] = _max;
+    steps[6] = _step6;
+    steps[7] = _max;
     if (debug == true){
       for (int i = 0; i < sizeof(ages); i++) {
         Serial.println(steps[i]);    /* code */
@@ -83,20 +64,20 @@ void AgeSelector::setSteps(int _min, int _step1,int _step2, int _step3, int _ste
     }
 }
 
-void AgeSelector::setAges(int _age1, int _age2, int _age3, int _age4, int _age5){
-  ages[0] = 0;
-  ages[1] = _age1;
-  ages[2] = _age2;
-  ages[3] = _age3;
-  ages[4] = _age4;
-  ages[5] = _age5;
+void AgeSelector::setAges(int _age1, int _age2, int _age3, int _age4, int _age5,int _age6, int _age7){
+  ages[0] = _age1;
+  ages[1] = _age2;
+  ages[2] = _age3;
+  ages[3] = _age4;
+  ages[4] = _age5;
+  ages[5] = _age6;
+  ages[6] = _age7;
   if (debug == true){
     Serial.println("AgeSelector::setAges():");
     for (int i = 0; i < sizeof(ages); i++) {
-      Serial.println(ages[i]);    /* code */
+      Serial.println(ages[i]);
     }
   }
-  //ages[6] = 99;
 }
 
 
@@ -130,10 +111,6 @@ void AgeSelector::report(boolean _debug){
 }
 }
 
-int AgeSelector::getMin(){
-  return min;
-}
-
-int AgeSelector::getMax(){
-  return max;
+int AgeSelector::getValue(){
+  return age;
 }
