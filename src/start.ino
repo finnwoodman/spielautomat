@@ -49,11 +49,6 @@ void setup(){
   //Voltmeter
   vMeter.report(false);
 
-  //Rotary
-  rotary.autoDecreaseSteps(50);
-  rotary.setMax(20);
-  rotary.report(false);
-  rotary.attachVMeter(&vMeter, 60);
   //Coins
   Coin.report(false);
   attachInterrupt(10, interrupt ,RISING);
@@ -70,8 +65,14 @@ void setup(){
   Line.addArrow(73,CRGB::White);
   Line.setWaveColors(CRGB::Cyan, CRGB::BlueViolet);
 
-
   Line.refresh();
+
+  //Rotary
+  rotary.autoDecreaseSteps(50);
+  rotary.setMax(20);
+  rotary.report(false);
+  rotary.attachVMeter(&vMeter, 60);
+  rotary.attachLine(&Line);
 
 
   //GameData
@@ -99,18 +100,6 @@ void loop(){
   rotary.refresh();
   vMeter.refresh();
   solenoid.refresh();
-
-  if (rotary.getSteps() > rotary.getMaxSteps()) {
-    Line.setModus(1);
-  }
-
-  if (rotary.getSteps() < 1) {
-    Line.setModus(2);
-  }
-
-  if ((rotary.getSteps() > 1) && (rotary.getSteps() < rotary.getMaxSteps())) {
-    Line.setModus(0);
-  }
 
   Line.line(rotary.getSteps(), rotary.getMaxSteps());
   Line.refresh();

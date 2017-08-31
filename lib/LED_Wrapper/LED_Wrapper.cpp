@@ -142,6 +142,7 @@ void LED_Wrapper::tint(CRGB _color){
   color = _color;
 }
 
+//Auskommentiert. Immer noch ein Rätsel. (Wird zwei Mal aufgerufen, modus 2 bleibt hängen.)
 /*if (modus == 2){
     setWaveColors(_color, CRGB::White);
     color = _color;

@@ -19,6 +19,11 @@ Rotary::Rotary(int _pin1, int _pin2)
 
 }
 
+void Rotary::attachLine(LED_Wrapper *_Line){
+  Line = _Line;
+  hasLine = true;
+}
+
 /**
  * Set the ultimate needed cycles.
  * @param _max Max number of turns.
@@ -109,7 +114,7 @@ void Rotary::refresh(){
     }
 
     //Debug Section
-  /*  if (debug == true ){
+    if (debug == true ){
       Serial.print ("ROTARY LIB ::: Refresh() ->");
       Serial.print ("Rotated: ");
       if (bCW){
@@ -120,7 +125,7 @@ void Rotary::refresh(){
       Serial.print(cycles);
       Serial.print(".");
       Serial.println(steps);
-  }*/
+  }
   oTime = millis(); //Sync timer to last action
   }
   last = val;
@@ -162,6 +167,20 @@ void Rotary::refresh(){
         oTime = nTime;
       }
       }
+    //Line Communication
+    if (hasLine == true) {
+      if (getSteps() > getMaxSteps()) {
+        Line -> setModus(1);
+      }
+
+      if (getSteps() < 1) {
+        Line -> setModus(2);
+      }
+
+      if ((getSteps() > 1) && (getSteps() < getMaxSteps())) {
+        Line -> setModus(0);
+      }
+    }
 
 }
 

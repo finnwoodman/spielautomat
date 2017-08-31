@@ -27,6 +27,7 @@ class Rotary
     int getSpeed();
 
     void attachVMeter(Voltmeter* _vMeter, int _vMax);
+    void attachLine(LED_Wrapper* _Line);
   ;
 
 
@@ -56,6 +57,9 @@ class Rotary
     bool vOutput = false;
     int vMax = 50;
     Voltmeter* vMeter;
+
+    bool hasLine = false;
+    LED_Wrapper* Line;
 
 
 };
