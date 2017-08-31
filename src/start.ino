@@ -40,7 +40,11 @@ void setup(){
 
   //Rotary switches
   rPlayers.report(false);
+  int _players [] = {1,2,3,4,5,6,7,8,9,10};
+  rPlayers.addMapping(_players);
   rDuration.report(false);
+  int _duration [] = {0,1,3,5,10,15,20,30,45,60};
+  rDuration.addMapping(_duration);
   //AgeSelector
   sAge.setThreshold(5);
   sAge.setSteps(0 , 200 , 400, 600, 800, 900, 1023);
@@ -63,13 +67,13 @@ void setup(){
   Line.addArrow(26, CRGB::Orange);
   Line.addArrow(50, CRGB::Green);
   Line.addArrow(73,CRGB::White);
-  Line.setWaveColors(CRGB::Cyan, CRGB::BlueViolet);
+  Line.setWaveColors(CRGB::White, CRGB::Black);
 
   Line.refresh();
 
   //Rotary
   rotary.autoDecreaseSteps(50);
-  rotary.setMax(20);
+  rotary.setMax(5);
   rotary.report(false);
   rotary.attachVMeter(&vMeter, 60);
   rotary.attachLine(&Line);
@@ -77,9 +81,8 @@ void setup(){
 
   //GameData
   Games.report(false);
-  Games.init(false);
+  Games.init();
   Games.grab();
-  Games.print(0);
 
   solenoid.adjust(20);
   solenoid.sequence(5, 500);
@@ -100,10 +103,26 @@ void loop(){
   rotary.refresh();
   vMeter.refresh();
   solenoid.refresh();
-
   Line.line(rotary.getSteps(), rotary.getMaxSteps());
   Line.refresh();
-
+  if (Line.getModus() == 1) {
+    if (Coin.getBudget(0.2) == true) {
+    Serial.println("++++ GAME BEGIN++++");
+    Serial.print("Personen: " );
+    Serial.println(rPlayers.getMapping());
+    Serial.print("Minuten: " );
+    Serial.println(rDuration.getMapping());
+    Serial.print("Alter von: " );
+    Serial.print(sAge.getMin());
+    Serial.print(" bis " );
+    Serial.println(sAge.getMax());
+    Serial.print("Kategorie: " );
+    Serial.println(arcadeBus.getActive());
+    Serial.println("++++ GAME END ++++");
+    Coin.level();
+    // Games.search(rPlayers.getPosition(), rDuration.getPosition() , sAge., int maxAge, int _cat);
+  }
+}
 }
 
 void interrupt(){

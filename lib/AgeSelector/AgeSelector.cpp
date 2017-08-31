@@ -34,7 +34,7 @@ void AgeSelector::refresh(){
       min = getCat(value1);
     }
     if (debug == true){
-      Serial.print("AgeSelector::newMin():Cateogory:");
+      Serial.print("AgeSelector::newMin():Category:");
       Serial.println(min);
     }
   }
@@ -128,4 +128,12 @@ void AgeSelector::report(boolean _debug){
     Serial.begin(9600);
   }
 }
+}
+
+int AgeSelector::getMin(){
+  return min;
+}
+
+int AgeSelector::getMax(){
+  return max;
 }

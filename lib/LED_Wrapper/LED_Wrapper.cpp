@@ -292,3 +292,7 @@ void LED_Wrapper::setModus(int _modus){
 void LED_Wrapper::resetModus(){
   modus = 0;
 }
+
+int LED_Wrapper::getModus(){
+  return modus;
+}

@@ -28,7 +28,9 @@ class RotarySwitch
    *  @return The current position (step) of the rotary switch.
    *  @see _steps
    */
-    int getPosition();
+   int getPosition();
+   int getMapping();
+   void addMapping(int *_mapping);
 
 
   private:
@@ -39,6 +41,7 @@ class RotarySwitch
     int step;
     boolean debug = false;
     unsigned long oTime = 0;
+    int *mapping;
 
 
 };

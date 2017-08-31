@@ -21,6 +21,7 @@ class Rotary
     void setMax(int _max);
     void measureSpeed();
     int getMax();
+    int getModus();
     int getCycles();
     int getSteps();
     int getMaxSteps();
@@ -46,6 +47,10 @@ class Rotary
     int oSpeed = 0;
     //Debug
     boolean debug = false;
+    //Status
+    bool atMax = false;
+    bool atMin = false;
+    bool atRun = false;
 
   protected:
     boolean autoCycle = false;
@@ -60,6 +65,9 @@ class Rotary
 
     bool hasLine = false;
     LED_Wrapper* Line;
+
+    //Status
+    void resetStatus();
 
 
 };

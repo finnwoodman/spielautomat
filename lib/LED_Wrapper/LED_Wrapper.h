@@ -30,6 +30,7 @@ class LED_Wrapper
 
   void setModus(int _modus);
   void resetModus();
+  int getModus();
   void setWaveColors(CRGB _wColor1, CRGB _wColor2);
   void rainbow(long _duration);
   void rainbowSequence(long _duration);

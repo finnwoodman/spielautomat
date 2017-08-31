@@ -168,19 +168,31 @@ void Rotary::refresh(){
       }
       }
     //Line Communication
-    if (hasLine == true) {
-      if (getSteps() > getMaxSteps()) {
-        Line -> setModus(1);
+
+      if ((getSteps() > getMaxSteps()) && (atMax == false)) {
+        resetStatus();
+        atMax = true;
+        if (hasLine == true){
+          Line -> setModus(1);
+        }
       }
 
-      if (getSteps() < 1) {
-        Line -> setModus(2);
+      if ((getSteps() < 1) && (atMin == false)) {
+        resetStatus();
+        atMin = true;
+        if (hasLine == true){
+          Line -> setModus(2);
+        }
       }
 
-      if ((getSteps() > 1) && (getSteps() < getMaxSteps())) {
-        Line -> setModus(0);
+      if ((getSteps() > 1) && (getSteps() < getMaxSteps()) && (atRun == false)) {
+        resetStatus();
+        atRun = true;
+        if (hasLine == true){
+          Line -> setModus(0);
+        }
       }
-    }
+
 
 }
 
@@ -267,4 +279,14 @@ void Rotary::attachVMeter(Voltmeter* _vMeter, int _vMax){
   vMax = _vMax;
   vMeter = _vMeter;
   vOutput = true;
+}
+
+int Rotary::getModus(){
+  //return Line -> modus;
+}
+
+void Rotary::resetStatus(){
+  atMax = false;
+  atMin = false;
+  atRun = false;
 }

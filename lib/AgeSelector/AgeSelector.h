@@ -15,6 +15,8 @@ class AgeSelector
     void report(boolean _debug);
     int steps[7];
     int ages[6];
+    int getMin();
+    int getMax();
 
   private:
     int buffer;

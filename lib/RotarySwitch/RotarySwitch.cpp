@@ -14,8 +14,28 @@ RotarySwitch::RotarySwitch(int _pin, int _intervals)
     pin = _pin;
     pinMode(pin, INPUT);
     step = round(analogRead(pin)/intervals);
+    mapping = (int *)malloc(sizeof(int) * _intervals);
+    for (int i = 0; i < _intervals; i++) {
+      mapping[i] = i;
+    }
 }
 
+void RotarySwitch::addMapping(int *_mapping){
+
+  for (int i = 0; i < oIntervals; i++) {
+
+    mapping[i] = _mapping[i];
+    if(debug == true){
+      Serial.print("RotarySwitch::Mapping: ");
+      Serial.println(mapping[i]);
+    
+    }
+  }
+}
+
+int RotarySwitch::getMapping(){
+  return mapping[getPosition()];
+}
 
 /**
  * Re-Read rot. switch and calc step.
@@ -31,6 +51,8 @@ void RotarySwitch::refresh(){
     Serial.println(value);
     Serial.print("Step : ");
     Serial.println(step);
+    Serial.print("Mapping : ");
+    Serial.println(mapping[step]);
   }
   }
 }
