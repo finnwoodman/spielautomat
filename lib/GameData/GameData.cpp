@@ -51,7 +51,7 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
           if (fields[i][5 + _cat] == 1) {
             _game[_pointer] = i;
             if (debug == true){
-              Serial.print("*");
+              Serial.println("*");
             }
             if (_pointer == 9) {
               break;
@@ -69,14 +69,20 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
     if (debug == true){
       Serial.println("GameData:::Search()::Found several games :-)");
     }
+    if (_pointer > 1){
     _pointer = random(0, _pointer+1);
+    }
+    else {
+    _pointer = 0;
+    }
   }
   if (debug == true){
     Serial.print("Selected::: ");
     Serial.println(_game[_pointer]);
   }
   game = _game[_pointer];
-}
+
+  }
 
 void GameData::print(){
   if (hasPrinter == true) {

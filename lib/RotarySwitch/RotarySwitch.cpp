@@ -21,14 +21,11 @@ RotarySwitch::RotarySwitch(int _pin, int _intervals)
 }
 
 void RotarySwitch::addMapping(int *_mapping){
-
   for (int i = 0; i < oIntervals; i++) {
-
     mapping[i] = _mapping[i];
     if(debug == true){
       Serial.print("RotarySwitch::Mapping: ");
       Serial.println(mapping[i]);
-    
     }
   }
 }
@@ -41,9 +38,10 @@ int RotarySwitch::getMapping(){
  * Re-Read rot. switch and calc step.
  */
 void RotarySwitch::refresh(){
-  if ((millis()-oTime)>100){
+  if ((millis()-oTime)>1000){
   value = analogRead(pin);
-  step = round(value/intervals);
+  step = round((value + corrector)/intervals);
+  //int step = int(_tmp);
   oTime = millis();
   if (debug == true) {
     Serial.println("RotarySwitch::Refresh:");
@@ -57,6 +55,9 @@ void RotarySwitch::refresh(){
   }
 }
 
+void RotarySwitch::addCorrector(int _corrector){
+  corrector = _corrector;
+}
 void RotarySwitch::setThreshold(int _threshold){
   intervals = (1024+_threshold)/oIntervals;
   if (debug == true){

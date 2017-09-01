@@ -41,10 +41,12 @@ void setup(){
 
   //Rotary switches
   rPlayers.report(false);
-  int _players [] = {1,2,3,4,5,6,7,8,9,10};
+  int _players [] = {10,9,8,7,6,5,4,3,2,1};
   rPlayers.addMapping(_players);
-  rDuration.report(false);
+  rPlayers.addCorrector(20);
+  rDuration.report(true);
   int _duration [] = {60,45,30,20,15,10,5,3,1,0};
+  rDuration.addCorrector(20);
   rDuration.addMapping(_duration);
   //AgeSelector
   minAge.setThreshold(2);
@@ -87,7 +89,7 @@ void setup(){
 
 
   //GameData
-  Games.report(false);
+  Games.report(true);
   Games.init();
   Games.grab();
 
@@ -113,7 +115,7 @@ void loop(){
   solenoid.refresh();
   Line.line(rotary.getSteps(), rotary.getMaxSteps());
   Line.refresh();
-/*  if (Line.getModus() == 1) {
+  if (Line.getModus() == 1) {
     if (Coin.getBudget(0.2) == true) {
     Serial.println("++++ GAME BEGIN++++");
     Serial.print("Personen: " );
@@ -121,16 +123,20 @@ void loop(){
     Serial.print("Minuten: " );
     Serial.println(rDuration.getMapping());
     Serial.print("Alter von: " );
-    Serial.print(minAge.getMin());
+    Serial.print(minAge.getValue());
     Serial.print(" bis " );
-    Serial.println(minAge.getMax());
+    Serial.println(maxAge.getValue());
     Serial.print("Kategorie: " );
     Serial.println(arcadeBus.getActive());
+    Serial.print("mit Ball: " );
+    Serial.println(tPilot.get());
     Serial.println("++++ GAME END ++++");
+
+    Games.search(rPlayers.getPosition(), rDuration.getPosition() , minAge.getValue(), maxAge.getValue(), arcadeBus.getActive());
+    Games.print(Games.getGame());
     Coin.level();
-    // Games.search(rPlayers.getPosition(), rDuration.getPosition() , minAge., int maxAge, int _cat);
   }
-}*/
+}
 }
 
 void interrupt(){

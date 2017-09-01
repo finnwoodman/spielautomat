@@ -31,6 +31,7 @@ class RotarySwitch
    int getPosition();
    int getMapping();
    void addMapping(int *_mapping);
+   void addCorrector(int _corrector);
 
 
   private:
@@ -42,6 +43,7 @@ class RotarySwitch
     boolean debug = false;
     unsigned long oTime = 0;
     int *mapping;
+    int corrector = 0;
 
 
 };
