@@ -290,3 +290,8 @@ void Rotary::resetStatus(){
   atMin = false;
   atRun = false;
 }
+
+void Rotary::level(){
+  cycles = 0;
+  steps = 0;
+}

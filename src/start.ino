@@ -103,7 +103,6 @@ void setup(){
   //Test Section
   //arcadeBus.test(500);
 
-  Games.print(666);
 }
 
 
@@ -120,8 +119,8 @@ void loop(){
   Line.line(rotary.getSteps(), rotary.getMaxSteps());
   Line.refresh();
   if (Line.getModus() == 1) {
-    if (Coin.getBudget(0.2) == true) {
-    Serial.println("++++ GAME BEGIN++++");
+    if (Coin.getBudget(0.2) >= true) {
+/*    Serial.println("++++ GAME BEGIN++++");
     Serial.print("Personen: " );
     Serial.println(rPlayers.getMapping());
     Serial.print("Minuten: " );
@@ -139,9 +138,14 @@ void loop(){
     Serial.println("++++ GAME END ++++");
     Games.search(rPlayers.getPosition(), rDuration.getMapping(),minAge.getValue(),maxAge.getValue(),arcadeBus.getActive()+1, tPilot.get());
     Serial.println("++++ GAME IS++++");
-    Serial.println(Games.getGame());
+    Serial.println(Games.getGame());*/
+    solenoid.bell();
+    solenoid.refresh();
     Games.print(Games.getGame());
-    Coin.level();
+    solenoid.sequence(3, 750);
+    Coin.reset();
+    rotary.level();
+
   }
 }
 }

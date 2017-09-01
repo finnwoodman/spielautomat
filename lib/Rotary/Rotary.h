@@ -29,6 +29,8 @@ class Rotary
 
     void attachVMeter(Voltmeter* _vMeter, int _vMax);
     void attachLine(LED_Wrapper* _Line);
+
+    void level();
   ;
 
 
