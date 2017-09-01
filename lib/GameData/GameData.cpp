@@ -38,8 +38,11 @@ GameData::GameData( int _lines, int _fields){
     images[i] = (int*) malloc(2 * sizeof(int));
   }
 }
-void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _cat){
+
+//Version mit Ball.
+void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _cat, bool _ball){
   int _game[10];
+  _game[0] = 666;
   int _pointer = 0;
   for (int i = 0; i < LINES; i++) {
     if (debug == true){
@@ -49,35 +52,26 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
       if ((fields[i][2] <= _duration) && (fields[i][3] >= _duration)) {
         if ((fields[i][4] <= _minAge) && (fields[i][5] >= _maxAge)) {
           if (fields[i][5 + _cat] == 1) {
-            _game[_pointer] = i;
-            /*Serial.println("++++ GAME FOUND++++");
-            Serial.print("Game: " );
-            Serial.println(i);
-            Serial.print("Spieler " );
-            Serial.print(fields[i][0]);
-            Serial.print(" bis ");
-            Serial.println(fields[i][1]);
-            Serial.print("Dauer " );
-            Serial.print(fields[i][2]);
-            Serial.print(" bis ");
-            Serial.println(fields[i][3]);
-            Serial.print("Alter von: " );
-            Serial.print(fields[i][4]);
-            Serial.print(" bis " );
-            Serial.println(fields[i][5]);
-            Serial.print("Kategorie: " );
-            Serial.println(_cat);
-           Serial.print("mit Ball: " );
-            Serial.println(tPilot.get());
-            Serial.println("++++ GAME END ++++");*/
-
-            if (debug == true){
-              Serial.println("*");
+            if ((_ball == true) && (fields[i][11] == 1)){
+              _game[_pointer] = i;
+              _pointer++;
+              if (debug == true){
+                Serial.println("*");
+              }
+              if (_pointer == 9) {
+                break;
+              }
             }
-            if (_pointer == 9) {
-              break;
+            if ((_ball == false) && (fields[i][11] == 0)){
+              _game[_pointer] = i;
+              _pointer++;
+              if (debug == true){
+                Serial.println("*");
+              }
+              if (_pointer == 9) {
+                break;
+              }
             }
-            _pointer++;
           }
         }
       }
@@ -87,15 +81,15 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
     Serial.println();
   }
 
-    if (_pointer > 1){
+  if (_pointer > 1){
     _pointer = random(0, _pointer+1);
     if (debug == true){
       Serial.println("GameData:::Search()::Found several games :-)");
     }
-    }
-    else {
+  }
+  else {
     _pointer = 0;
-    }
+  }
 
   if (debug == true){
     Serial.print("Selected::: ");
@@ -103,7 +97,7 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
   }
   game = _game[_pointer];
 
-  }
+}
 
 void GameData::print(){
   if (hasPrinter == true) {
@@ -120,19 +114,33 @@ void GameData::print(){
 }
 
 void GameData::print(int _game){
+
   if (hasPrinter == true) {
-    Serial.println("NAME ->");
-    Serial.println(files[_game]);
-    String sdFiName = files[_game];
-    sdFiName+=".bin";
-    Serial.println(sdFiName);
-    const char * c = sdFiName.c_str();
-    File sdCardFile = sd.open (c, FILE_READ);
-    while (sdCardFile.available()) {
-      Serial.println("Printing");
-      printer.printBitmap(images[_game][0], images[_game][1], dynamic_cast<Stream*>(&sdCardFile));
+    String sdFiName;
+    if(_game != 666){
+      Serial.println("NAME ->");
+      Serial.println(files[_game]);
+      sdFiName = files[_game];
+      sdFiName+=".bin";
+      Serial.println(sdFiName);
+      const char * c = sdFiName.c_str();
+      File sdCardFile = sd.open (c, FILE_READ);
+      while (sdCardFile.available()) {
+        Serial.println("Printing");
+        printer.printBitmap(images[_game][0], images[_game][1], dynamic_cast<Stream*>(&sdCardFile));
+      }
+      sdCardFile.close();
     }
-    sdCardFile.close();
+    if(_game == 666){
+      sdFiName="zonk.bin";
+      const char * c = sdFiName.c_str();
+      File sdCardFile = sd.open (c, FILE_READ);
+      while (sdCardFile.available()) {
+        Serial.println("Printing");
+        printer.printBitmap(384, 384, dynamic_cast<Stream*>(&sdCardFile));
+      }
+      sdCardFile.close();
+    }
     printer.feed(10);
   }
 }

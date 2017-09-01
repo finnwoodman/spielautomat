@@ -12,7 +12,7 @@
 #include <GameData.h>
 
 
-GameData Games(130,11);
+GameData Games(130,12);
 //Hardware
 LED_Wrapper Line;
 ArcadeCollector arcadeBus(5);
@@ -29,7 +29,6 @@ SolSound solenoid(A3);
 
 
 void setup(){
-  delay(10000);
   Serial.begin(9600);
     //Arcadebus
   arcadeBus.add(32, 31, &Line, CRGB::Red);
@@ -104,7 +103,7 @@ void setup(){
   //Test Section
   //arcadeBus.test(500);
 
-
+  Games.print(666);
 }
 
 
@@ -138,9 +137,7 @@ void loop(){
     Serial.print("Name: " );
     Serial.println();
     Serial.println("++++ GAME END ++++");
-
-    Games.search(rPlayers.getPosition(), rDuration.getMapping() ,
-    minAge.getValue(), maxAge.getValue(), arcadeBus.getActive()+1);
+    Games.search(rPlayers.getPosition(), rDuration.getMapping(),minAge.getValue(),maxAge.getValue(),arcadeBus.getActive()+1, tPilot.get());
     Serial.println("++++ GAME IS++++");
     Serial.println(Games.getGame());
     Games.print(Games.getGame());

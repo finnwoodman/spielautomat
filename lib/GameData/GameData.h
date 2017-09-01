@@ -20,6 +20,7 @@ public:
   void report(boolean _debug);
   void grab();
   void search(int _team, int _duration, int _minAge, int maxAge, int _cat);
+  void search(int _team, int _duration, int _minAge, int _maxAge, int _cat, bool _ball);
   void printData();
   int getGame();
 
