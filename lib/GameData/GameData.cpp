@@ -50,6 +50,27 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
         if ((fields[i][4] <= _minAge) && (fields[i][5] >= _maxAge)) {
           if (fields[i][5 + _cat] == 1) {
             _game[_pointer] = i;
+            /*Serial.println("++++ GAME FOUND++++");
+            Serial.print("Game: " );
+            Serial.println(i);
+            Serial.print("Spieler " );
+            Serial.print(fields[i][0]);
+            Serial.print(" bis ");
+            Serial.println(fields[i][1]);
+            Serial.print("Dauer " );
+            Serial.print(fields[i][2]);
+            Serial.print(" bis ");
+            Serial.println(fields[i][3]);
+            Serial.print("Alter von: " );
+            Serial.print(fields[i][4]);
+            Serial.print(" bis " );
+            Serial.println(fields[i][5]);
+            Serial.print("Kategorie: " );
+            Serial.println(_cat);
+           Serial.print("mit Ball: " );
+            Serial.println(tPilot.get());
+            Serial.println("++++ GAME END ++++");*/
+
             if (debug == true){
               Serial.println("*");
             }
@@ -65,17 +86,17 @@ void GameData::search(int _team, int _duration, int _minAge, int _maxAge, int _c
   if (debug == true){
     Serial.println();
   }
-  if (_pointer != 0) {
+
+    if (_pointer > 1){
+    _pointer = random(0, _pointer+1);
     if (debug == true){
       Serial.println("GameData:::Search()::Found several games :-)");
     }
-    if (_pointer > 1){
-    _pointer = random(0, _pointer+1);
     }
     else {
     _pointer = 0;
     }
-  }
+
   if (debug == true){
     Serial.print("Selected::: ");
     Serial.println(_game[_pointer]);
@@ -313,7 +334,6 @@ void GameData::report(boolean _debug){
 void GameData::printData(){
   report(true);
   for (int i = 0; i < LINES; i++) {
-    Serial.println(String(files[i]));
     Serial.print(i);
     Serial.println(" ::");
     for (int j = 0; j < FIELDS; j++) {
@@ -321,10 +341,12 @@ void GameData::printData(){
       Serial.print("  ");
     }
     Serial.println();
-    Serial.println("File = ");
-    Serial.print("  ");
+    Serial.print("File = ");
+    Serial.print(String(files[i]));
+    Serial.print(" with ");
     Serial.print(images[i][0]);
     Serial.print(" x ");
     Serial.println(images[i][1]);
+    Serial.println("------");
   }
 }

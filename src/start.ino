@@ -12,7 +12,7 @@
 #include <GameData.h>
 
 
-GameData Games(100,11);
+GameData Games(130,11);
 //Hardware
 LED_Wrapper Line;
 ArcadeCollector arcadeBus(5);
@@ -29,8 +29,9 @@ SolSound solenoid(A3);
 
 
 void setup(){
+  delay(10000);
   Serial.begin(9600);
-  //Arcadebus
+    //Arcadebus
   arcadeBus.add(32, 31, &Line, CRGB::Red);
   arcadeBus.add(30, 29, &Line, CRGB::Yellow);
   arcadeBus.add(28, 27, &Line, CRGB::Green);
@@ -39,21 +40,25 @@ void setup(){
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
 
-  //Rotary switches
+  //rPlayer
   rPlayers.report(false);
   int _players [] = {10,9,8,7,6,5,4,3,2,1};
   rPlayers.addMapping(_players);
   rPlayers.addCorrector(20);
-  rDuration.report(true);
+
+  //rDuration
+  rDuration.report(false);
   int _duration [] = {60,45,30,20,15,10,5,3,1,0};
   rDuration.addCorrector(20);
   rDuration.addMapping(_duration);
-  //AgeSelector
+
+  //minAge
   minAge.setThreshold(2);
   minAge.setSteps(0 , 20 , 50, 130, 200, 350, 750, 1023);
   minAge.setAges(30, 20, 15, 10, 7, 5, 3);
   minAge.report(false);
 
+  //maxAge
   maxAge.setThreshold(2);
   maxAge.setSteps(0 , 15 , 50, 120, 220, 400, 750, 1023);
   maxAge.setAges(99, 60, 30, 20, 15, 10, 7);
@@ -127,12 +132,17 @@ void loop(){
     Serial.print(" bis " );
     Serial.println(maxAge.getValue());
     Serial.print("Kategorie: " );
-    Serial.println(arcadeBus.getActive());
+    Serial.println(arcadeBus.getActive()+1);
     Serial.print("mit Ball: " );
     Serial.println(tPilot.get());
+    Serial.print("Name: " );
+    Serial.println();
     Serial.println("++++ GAME END ++++");
 
-    Games.search(rPlayers.getPosition(), rDuration.getPosition() , minAge.getValue(), maxAge.getValue(), arcadeBus.getActive());
+    Games.search(rPlayers.getPosition(), rDuration.getMapping() ,
+    minAge.getValue(), maxAge.getValue(), arcadeBus.getActive()+1);
+    Serial.println("++++ GAME IS++++");
+    Serial.println(Games.getGame());
     Games.print(Games.getGame());
     Coin.level();
   }

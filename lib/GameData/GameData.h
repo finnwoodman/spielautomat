@@ -25,7 +25,7 @@ public:
 
   int** fields;
   int** images;
-  String files[100];
+  String files[130];
   void print();
   void print(int _game);
 
