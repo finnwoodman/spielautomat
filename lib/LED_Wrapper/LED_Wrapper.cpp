@@ -6,6 +6,7 @@
 #include "FastLED.h"
 
 
+
 /**
 LED Wrapper Class
 LED_Wrapper.cpp
@@ -33,6 +34,24 @@ LED_Wrapper::LED_Wrapper(){
 
 }
 
+void LED_Wrapper::setArrows(int _arr0, int _arr1, int _arr2, int _arr3, int _arr4){
+  hasArrows = true;
+  if (clw == true) {
+    arrows[0] = _arr0;
+    arrows[1] = _arr1;
+    arrows[2] = _arr2;
+    arrows[3] = _arr3;
+    arrows[4] = _arr4;
+  }
+  else {
+    arrows[0] = NUM_LEDS - _arr0 - 1;
+    arrows[1] = NUM_LEDS - _arr1 - 1;
+    arrows[2] = NUM_LEDS - _arr2 - 1;
+    arrows[3] = NUM_LEDS - _arr3 - 1;
+    arrows[4] = NUM_LEDS - _arr4 - 1;
+  }
+
+}
 
 /**
  * Set basic highlight color.
@@ -176,7 +195,16 @@ void LED_Wrapper::line(int _pos, int _max ){
 pos = _pos;
 if (modus == 0){
     if (clw == true){
-    int _tmp = map(_pos, 0, _max, 0, 100);
+    int _tmp = map(_pos, 0, _max, 0, 99);
+    for (int i = 0; i < 5; i++) {
+      if (_tmp == arrows[i]) {
+        atArrow = true;
+        break;
+      }
+      else{
+        atArrow = false;
+      }
+    }
     for (int i = 0; i < _tmp; i++) {
         //  if (leds[i] != _color){
         leds[i] = scheme[i];
@@ -191,7 +219,16 @@ if (modus == 0){
   }
 
   if (clw == false){
-    int _tmp = map(_pos, 0, _max, 100, 0);
+    int _tmp = map(_pos, 0, _max, 99, 0);
+    for (int i = 0; i < 5; i++) {
+      if (_tmp == arrows[i]) {
+        atArrow = true;
+        break;
+      }
+      else{
+        atArrow = false;
+      }
+    }
     for (int i = NUM_LEDS; i > _tmp; i--) {
         //  if (leds[i] != _color){
         leds[i] = scheme[i];
@@ -295,4 +332,8 @@ void LED_Wrapper::resetModus(){
 
 int LED_Wrapper::getModus(){
   return modus;
+}
+
+bool LED_Wrapper::arrowStatus(){
+  return atArrow;
 }

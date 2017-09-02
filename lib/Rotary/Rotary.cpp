@@ -94,6 +94,12 @@ int Rotary::getSpeed(){
 //Main function - Update RT Knobs Position - Calls autoDecrease() if activated.
 void Rotary::refresh(){
   measureSpeed();
+  if (Line->arrowStatus() == true) {
+    autoPause(true, 5000);
+  }
+  else{
+    autoPause(false);
+  }
   //Magic rotary section
   int val = digitalRead(pin1);
   if (val != last){
@@ -130,7 +136,12 @@ void Rotary::refresh(){
   }
   last = val;
 
+  if ((autoDecr == true) && ((millis() - aTime) > aInterval)){
+      decreaseSteps((max*40)/40);
+      autoDecr == false;
+  }
   //AutoDecrease Section
+  if (autoDecr == false) {
   if ((autoCycle == true) && (cycles > 0)){
 
     long nTime = millis();
@@ -156,10 +167,7 @@ void Rotary::refresh(){
           Serial.println ("ms.");
         }*/
 
-        if ((steps == 0) && (cycles > 0)) {
-          steps = 40;
-          cycles--;
-        }
+
         if ((steps == 0) && (cycles == 0)) {
         increaseSteps(1);
         }
@@ -167,6 +175,7 @@ void Rotary::refresh(){
         oTime = nTime;
       }
       }
+    }
     //Line Communication
 
       if ((getSteps() > getMaxSteps()) && (atMax == false)) {
@@ -192,6 +201,8 @@ void Rotary::refresh(){
           Line -> setModus(0);
         }
       }
+
+
 
 
 }
@@ -230,6 +241,7 @@ void Rotary::decrease(int _dec){
 
 void Rotary::increaseSteps(int _inc){
   steps+=_inc;
+
 /*  if (debug == true ){
     Serial.print ("ROTARY LIB ::: increaseSteps() -> ");
     Serial.print(cycles);
@@ -239,7 +251,22 @@ void Rotary::increaseSteps(int _inc){
 }
 
 void Rotary::decreaseSteps(int _dec){
-  steps-=_dec;
+if (cycles == 0){
+  if ((steps -= _dec) < 0){
+    steps = 1;
+  }
+  if ((steps -= _dec) >= 0){
+    steps -= _dec;
+  }
+}
+if (cycles > 0){
+  if ((steps -= _dec) < 0){
+    steps = 40 - (_dec - steps);
+    cycles--;
+  }
+}
+
+
   if (debug == true ){
     Serial.print ("ROTARY LIB ::: decreaseSteps() -> ");
     Serial.print(cycles);
@@ -247,10 +274,21 @@ void Rotary::decreaseSteps(int _dec){
     Serial.println(steps);
   }
 }
+void Rotary::autoPause(bool _auto, long _aInterval){
+  if (_auto != autoDecr){
+    autoDecr = _auto;
+    aTime = millis();
+    aInterval = _aInterval;
+  }
+}
 
+void Rotary::autoPause(bool _auto){
+    if (_auto != autoDecr){
+      autoDecr = _auto;
+  }
+}
 //Activate autoDecrease and set interval
 void Rotary::autoDecrease(long _interval){
-
   interval = _interval;
   autoCycle = true;
   autoSteps = false;

@@ -35,6 +35,8 @@ class LED_Wrapper
   void rainbow(long _duration);
   void rainbowSequence(long _duration);
 
+  void setArrows(int _arr0, int _arr1, int _arr2, int _arr3, int _arr4);
+  bool arrowStatus(); 
 
   private:
     CRGB leds[NUM_LEDS];
@@ -44,9 +46,15 @@ class LED_Wrapper
     CRGB color = CRGB::BlueViolet;
 
   protected:
+
     int pos;
 
+    //Arrows
     int arrowSize;
+    int arrows[5];
+    bool hasArrows = false;
+    bool atArrow = false;
+
     bool clw;
     CRGB scheme[NUM_LEDS];
 
@@ -63,6 +71,7 @@ class LED_Wrapper
     CRGB wColor1 = CRGB::White;
     CRGB wColor2 = CRGB::Black;
     void wave(long _duration);
+
 
 
 

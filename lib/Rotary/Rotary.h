@@ -31,6 +31,8 @@ class Rotary
     void attachLine(LED_Wrapper* _Line);
 
     void level();
+    void autoPause(bool _auto, long _aTime);
+    void autoPause(bool _auto);
   ;
 
 
@@ -67,6 +69,10 @@ class Rotary
 
     bool hasLine = false;
     LED_Wrapper* Line;
+
+    bool autoDecr = false;
+    long aTime;
+    long aInterval = 5000;
 
     //Status
     void resetStatus();

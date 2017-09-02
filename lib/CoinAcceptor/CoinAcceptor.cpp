@@ -30,6 +30,9 @@ void CoinAcceptor::setSummand(float _summand){
     Serial.println(summand);
   }
 }
+void CoinAcceptor::decrease(float _decr){
+  budget -= _decr;
+}
 
 void CoinAcceptor::increase(){
   if ((millis() - otime) > interval){

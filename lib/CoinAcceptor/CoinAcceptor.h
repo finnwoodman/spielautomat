@@ -8,6 +8,7 @@ class CoinAcceptor
   public:
     CoinAcceptor();
     void increase();
+    void decrease(float _decr);
     void reset();
     void setSummand(float _summand);
     void report(boolean _debug);
