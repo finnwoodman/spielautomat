@@ -4,6 +4,7 @@
 #include "Arduino.h"
 #include "Voltmeter.h"
 #include "LED_Wrapper.h"
+#include "SolSound.h"
 
 class Rotary
 {
@@ -33,6 +34,9 @@ class Rotary
     void level();
     void autoPause(bool _auto, long _aTime);
     void autoPause(bool _auto);
+
+    void attachSolenoid(SolSound* _Solenoid);
+
   ;
 
 
@@ -77,6 +81,9 @@ class Rotary
     //Status
     void resetStatus();
 
+    //Solenoid
+    SolSound* Solenoid;
+    bool hasSolenoid = false;
 
 };
 

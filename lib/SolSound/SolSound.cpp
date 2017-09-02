@@ -23,7 +23,7 @@ SolSound::SolSound(int _pin){
   stroke = 100;
   oStroke = stroke;
 
-  duration = 1000;
+  duration = 0;
   oDuration = duration;
 
   timer = millis();

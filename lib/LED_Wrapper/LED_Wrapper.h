@@ -6,6 +6,7 @@
 #include "Arduino.h"
 #include "FastLED.h"
 
+
 #define NUM_LEDS 100
 #define PIN 35
 /**
@@ -36,7 +37,7 @@ class LED_Wrapper
   void rainbowSequence(long _duration);
 
   void setArrows(int _arr0, int _arr1, int _arr2, int _arr3, int _arr4);
-  bool arrowStatus(); 
+  bool arrowStatus();
 
   private:
     CRGB leds[NUM_LEDS];
