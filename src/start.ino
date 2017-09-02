@@ -87,7 +87,7 @@ void setup(){
 
   //Rotary
   rotary.autoDecreaseSteps(12);
-  rotary.setMax(5);
+  rotary.setMax(15);
   rotary.report(false);
   rotary.attachVMeter(&vMeter, 60);
   rotary.attachLine(&Line);

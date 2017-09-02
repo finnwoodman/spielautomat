@@ -23,7 +23,7 @@ SolSound::SolSound(int _pin){
   stroke = 100;
   oStroke = stroke;
 
-  duration = 0;
+  duration = 100;
   oDuration = duration;
 
   timer = millis();
@@ -38,8 +38,8 @@ SolSound::SolSound(int _pin){
 * Trigger single bell stroke.
 */
 void SolSound::bell(){
-  repetitions++;
-  oRepetitions++;
+  repetitions = 1;
+  oRepetitions = 1 ;
 }
 
 
