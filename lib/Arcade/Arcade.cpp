@@ -20,9 +20,14 @@ Arcade::Arcade()
 }
 
 void Arcade::attachLine(LED_Wrapper* _line, CRGB _color){
-  attach = true;
+  hasLine = true;
   line = _line;
   color = _color;
+}
+
+void Arcade::attachSolenoid(SolSound* _Solenoid){
+  hasSolenoid = true;
+  Solenoid = _Solenoid;
 }
 
 void Arcade::add(int _pin1, int _pin2){
@@ -48,9 +53,14 @@ void Arcade::refresh(){
 	if ((_last == LOW) && (status == false)){
 		status = true;
 		ostatus = false;
-    if (attach == true){
+    if (hasLine == true){
       line -> tint(color);
     }
+
+    if(hasSolenoid == true){
+      Solenoid -> bell();
+    }
+
 		activate();
 		if (debug == true) {
 			Serial.print ("ARCADE LIB ::: refresh() -> Pin");
