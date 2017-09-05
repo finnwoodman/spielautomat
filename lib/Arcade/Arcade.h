@@ -4,6 +4,7 @@
 
 #include "Arduino.h"
 #include "LED_Wrapper.h"
+#include "SolSound.h"
 
 class Arcade
 {
@@ -20,6 +21,7 @@ class Arcade
     void setStatus(boolean _status);
     void reset();
     void attachLine(LED_Wrapper* _line, CRGB _color);
+    void attachSolenoid(SolSound* _solenoid);
     boolean getStatus();
     CRGB color = CRGB::White;
 
@@ -32,7 +34,7 @@ class Arcade
     //Debug
     boolean debug = false;
     LED_Wrapper* line;
-    bool attach = false;
+    bool hasLine = false;
 
   protected:
     boolean led = false;
@@ -42,6 +44,10 @@ class Arcade
     unsigned long oTime = 0;
     int  loops = 0;
     int  oloops = 0;
+
+    bool hasSolenoid = false;
+    SolSound* Solenoid;
+
 
 
 

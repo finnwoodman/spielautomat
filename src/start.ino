@@ -31,13 +31,13 @@ SolSound solenoid(A3);
 void setup(){
   Serial.begin(9600);
     //Arcadebus
-  arcadeBus.add(32, 31, &Line, CRGB::Red);
-  arcadeBus.add(30, 29, &Line, CRGB::Yellow);
-  arcadeBus.add(28, 27, &Line, CRGB::Green);
-  arcadeBus.add(26, 25, &Line, CRGB::Blue);
-  arcadeBus.add(24,12, &Line, CRGB::White);
+  arcadeBus.add(32, 31);
+  arcadeBus.add(30, 29);
+  arcadeBus.add(28, 27);
+  arcadeBus.add(26, 25);
+  arcadeBus.add(24,12);
   arcadeBus.setBlink(100,5);
-  arcadeBus.report(false);
+  arcadeBus.report(true);
 
   //rPlayer
   rPlayers.report(false);
@@ -96,8 +96,8 @@ void setup(){
 
 
   //GameData
-  Games.report(true);
-  Games.init();
+  Games.report(false);
+  Games.init(false);
   Games.grab();
 
   solenoid.adjust(20);
