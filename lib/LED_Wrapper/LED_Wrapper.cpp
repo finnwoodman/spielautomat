@@ -34,8 +34,6 @@ LED_Wrapper::LED_Wrapper(){
 
 }
 
-
-
 void LED_Wrapper::setArrows(int _arr0, int _arr1, int _arr2, int _arr3, int _arr4){
   hasArrows = true;
   if (clw == true) {

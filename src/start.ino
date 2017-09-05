@@ -91,7 +91,6 @@ void setup(){
   rotary.report(false);
   rotary.attachVMeter(&vMeter, 60);
   rotary.attachLine(&Line);
-  rotary.attachSolenoid(&solenoid);
 
 
 
@@ -101,7 +100,7 @@ void setup(){
   Games.grab();
 
   solenoid.adjust(20);
-
+  solenoid.sequence(5, 500);
 
   //Test Section
   //arcadeBus.test(500);
