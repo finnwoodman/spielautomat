@@ -23,11 +23,7 @@ SolSound::SolSound(int _pin){
   stroke = 100;
   oStroke = stroke;
 
-<<<<<<< HEAD
   duration = 100;
-=======
-  duration = 1000;
->>>>>>> parent of e728812... works!
   oDuration = duration;
 
   timer = millis();

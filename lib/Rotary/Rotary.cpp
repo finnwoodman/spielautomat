@@ -24,6 +24,11 @@ void Rotary::attachLine(LED_Wrapper *_Line){
   hasLine = true;
 }
 
+void Rotary::attachSolenoid(SolSound* _Solenoid){
+    hasSolenoid = true;
+    Solenoid = _Solenoid;
+}
+
 /**
  * Set the ultimate needed cycles.
  * @param _max Max number of turns.
@@ -276,6 +281,9 @@ if (cycles > 0){
 }
 void Rotary::autoPause(bool _auto, long _aInterval){
   if (_auto != autoDecr){
+    if ((hasSolenoid == true) && (speed > 1)){
+      Solenoid->bell();
+    }
     autoDecr = _auto;
     aTime = millis();
     aInterval = _aInterval;
