@@ -45,9 +45,6 @@ class Arcade
     int  loops = 0;
     int  oloops = 0;
 
-    bool hasSolenoid = false;
-    SolSound* Solenoid;
-
 
 
 

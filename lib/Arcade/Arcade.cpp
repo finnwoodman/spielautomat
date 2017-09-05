@@ -25,10 +25,7 @@ void Arcade::attachLine(LED_Wrapper* _line, CRGB _color){
   color = _color;
 }
 
-void Arcade::attachSolenoid(SolSound* _Solenoid){
-  hasSolenoid = true;
-  Solenoid = _Solenoid;
-}
+
 
 void Arcade::add(int _pin1, int _pin2){
   pinMode(_pin1, INPUT);
@@ -57,9 +54,7 @@ void Arcade::refresh(){
       line -> tint(color);
     }
 
-    if(hasSolenoid == true){
-      Solenoid -> bell();
-    }
+
 
 		activate();
 		if (debug == true) {
