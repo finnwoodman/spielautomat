@@ -34,6 +34,7 @@ class Rotary
     void level();
     void autoPause(bool _auto, long _aTime);
     void autoPause(bool _auto);
+    void autoPauseIgnore(bool _ignoreAutoPause);
 
     void attachSolenoid(SolSound* _Solenoid);
 
@@ -77,6 +78,8 @@ class Rotary
     bool autoDecr = false;
     long aTime;
     long aInterval = 5000;
+
+    bool ignoreAutoPause = false;
 
     //Status
     void resetStatus();

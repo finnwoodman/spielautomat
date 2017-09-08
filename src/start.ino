@@ -122,8 +122,11 @@ void loop(){
   Line.refresh();
   rotary.refresh();
 
+  if (Line.getModus() == 2) {
+    rotary.autoPauseIgnore(false);
+  }
 
-/*  if (Line.getModus() == 1) {
+  if (Line.getModus() == 1) {
     if (Coin.getBudget(0.2) >= true) {
 /*    Serial.println("++++ GAME BEGIN++++");
     Serial.print("Personen: " );
@@ -143,16 +146,15 @@ void loop(){
     Serial.println("++++ GAME END ++++");
     Games.search(rPlayers.getPosition(), rDuration.getMapping(),minAge.getValue(),maxAge.getValue(),arcadeBus.getActive()+1, tPilot.get());
     Serial.println("++++ GAME IS++++");
-    Serial.println(Games.getGame());
+    Serial.println(Games.getGame());*/
     solenoid.bell();
     solenoid.refresh();
     Games.print(Games.getGame());
     solenoid.sequence(3, 750);
     Coin.reset();
-    rotary.level();
-
+    rotary.autoPauseIgnore(true);
   }
-}*/
+}
 }
 
 void interrupt(){

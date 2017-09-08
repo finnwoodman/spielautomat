@@ -96,15 +96,25 @@ int Rotary::getSpeed(){
   return speed;
 }
 
+void Rotary::autoPauseIgnore(bool _ignoreAutoPause){
+
+  if (_ignoreAutoPause != ignoreAutoPause) {
+    ignoreAutoPause = _ignoreAutoPause;
+  }
+
+}
 //Main function - Update RT Knobs Position - Calls autoDecrease() if activated.
 void Rotary::refresh(){
   measureSpeed();
-  if (Line->arrowStatus() == true) {
+
+
+  if ((Line->arrowStatus() == true) && (ignoreAutoPause == false)) {
     autoPause(true, 5000);
   }
   else{
     autoPause(false);
   }
+
 
   //Magic rotary section
   int val = digitalRead(pin1);
