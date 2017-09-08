@@ -9,7 +9,6 @@ public:
   ArcadeCollector(int _arcades);
   void add(int _pin1, int _pin2);
   void add(int _pin1, int _pin2, LED_Wrapper* _line, CRGB _color);
-  void attachSolenoid(SolSound* _solenoid);
   void refresh();
   void setBlink(int _duration, int _cycles);
   void report(boolean _debug);

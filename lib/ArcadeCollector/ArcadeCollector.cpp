@@ -49,7 +49,7 @@ void ArcadeCollector::add(int _pin1, int _pin2, LED_Wrapper* _line, CRGB _color)
 }
 
 
-}
+
 void ArcadeCollector::refresh(){
   for (int i = 0; i < arcades; i++){
     bus[i].refresh();

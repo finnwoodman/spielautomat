@@ -145,6 +145,23 @@ void GameData::print(int _game){
   }
 }
 
+void GameData::print(String _game, int _w, int _h){
+
+  if (hasPrinter == true) {
+      String sdFiName = _game;
+      const char * c = sdFiName.c_str();
+      File sdCardFile = sd.open (c, FILE_READ);
+      while (sdCardFile.available()) {
+        Serial.println("Printing");
+        printer.printBitmap(_w, _h, dynamic_cast<Stream*>(&sdCardFile));
+      }
+      sdCardFile.close();
+
+
+    printer.feed(10);
+  }
+}
+
 void GameData::grab(){
   grabData();
   grabFiles();

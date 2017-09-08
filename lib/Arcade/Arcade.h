@@ -4,7 +4,7 @@
 
 #include "Arduino.h"
 #include "LED_Wrapper.h"
-#include "SolSound.h"
+
 
 class Arcade
 {
@@ -21,7 +21,6 @@ class Arcade
     void setStatus(boolean _status);
     void reset();
     void attachLine(LED_Wrapper* _line, CRGB _color);
-    void attachSolenoid(SolSound* _solenoid);
     boolean getStatus();
     CRGB color = CRGB::White;
 

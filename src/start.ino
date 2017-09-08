@@ -8,7 +8,7 @@
 #include <RotarySwitch.h>
 #include <SolSound.h>
 #include <Toggle.h>
-#include <LED_Wrapper.h>
+#include <LED_Wrapper.h>*/
 #include <GameData.h>
 
 
@@ -31,11 +31,11 @@ SolSound solenoid(A3);
 void setup(){
   Serial.begin(9600);
     //Arcadebus
-  arcadeBus.add(32, 31);
-  arcadeBus.add(30, 29);
-  arcadeBus.add(28, 27);
-  arcadeBus.add(26, 25);
-  arcadeBus.add(24,12);
+  arcadeBus.add(32, 31, &Line, CRGB::Red);
+  arcadeBus.add(30, 29, &Line, CRGB::Green);
+  arcadeBus.add(28, 27, &Line, CRGB::Yellow);
+  arcadeBus.add(26, 25, &Line, CRGB::Blue);
+  arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
   arcadeBus.report(true);
 
@@ -81,7 +81,7 @@ void setup(){
   Line.addArrow(50, CRGB::Green);
   Line.addArrow(73,CRGB::White);
   Line.setArrows(19, 26, 50, 73, 99);
-//  Line.setArrows(0,73,50,26,19);
+  Line.setArrows(0,73,50,26,19);
   Line.setWaveColors(CRGB::White, CRGB::Black);
   Line.refresh();
 
@@ -97,14 +97,14 @@ void setup(){
 
   //GameData
   Games.report(false);
-  Games.init(false);
+  Games.init();
   Games.grab();
 
   solenoid.adjust(20);
 
 
   //Test Section
-  //arcadeBus.test(500);
+  //arcadeBus.test(500);*/
 
 }
 

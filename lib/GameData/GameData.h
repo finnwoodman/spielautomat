@@ -29,6 +29,7 @@ public:
   String files[130];
   void print();
   void print(int _game);
+  void print(String _game, int _w, int _h);
 
 private:
 
