@@ -55,6 +55,9 @@ void LED_Wrapper::setArrows(int _arr0, int _arr1, int _arr2, int _arr3, int _arr
 
 }
 
+void LED_Wrapper::setBrightness(int _val){
+  FastLED.setBrightness(_val);
+}
 /**
  * Set basic highlight color.
  * @param _color Color as CRGB.

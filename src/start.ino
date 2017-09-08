@@ -32,9 +32,9 @@ void setup(){
   Serial.begin(9600);
     //Arcadebus
   arcadeBus.add(32, 31, &Line, CRGB::Red);
-  arcadeBus.add(30, 29, &Line, CRGB::Green);
-  arcadeBus.add(28, 27, &Line, CRGB::Yellow);
-  arcadeBus.add(26, 25, &Line, CRGB::Blue);
+  arcadeBus.add(30, 29, &Line, CRGB::Gold);
+  arcadeBus.add(28, 27, &Line, CRGB::Lime);
+  arcadeBus.add(26, 25, &Line, CRGB::RoyalBlue);
   arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
   arcadeBus.report(true);
@@ -76,13 +76,13 @@ void setup(){
 
   Line.setArrowSize(7);
 
-  Line.addArrow(19, CRGB::Red);
-  Line.addArrow(26, CRGB::Orange);
-  Line.addArrow(50, CRGB::Green);
-  Line.addArrow(73,CRGB::White);
+  Line.addArrow(19, CRGB::Grey);
+  Line.addArrow(26, CRGB::Grey);
+  Line.addArrow(50, CRGB::Grey);
+  Line.addArrow(73,CRGB::Grey);
   Line.setArrows(19, 26, 50, 73, 99);
-  Line.setArrows(0,73,50,26,19);
-  Line.setWaveColors(CRGB::White, CRGB::Black);
+  Line.setWaveColors(CRGB::Amethyst, CRGB::Green);
+  Line.setBrightness(255);
   Line.refresh();
 
   //Rotary
@@ -123,7 +123,7 @@ void loop(){
   rotary.refresh();
 
 
-  if (Line.getModus() == 1) {
+/*  if (Line.getModus() == 1) {
     if (Coin.getBudget(0.2) >= true) {
 /*    Serial.println("++++ GAME BEGIN++++");
     Serial.print("Personen: " );
@@ -143,7 +143,7 @@ void loop(){
     Serial.println("++++ GAME END ++++");
     Games.search(rPlayers.getPosition(), rDuration.getMapping(),minAge.getValue(),maxAge.getValue(),arcadeBus.getActive()+1, tPilot.get());
     Serial.println("++++ GAME IS++++");
-    Serial.println(Games.getGame());*/
+    Serial.println(Games.getGame());
     solenoid.bell();
     solenoid.refresh();
     Games.print(Games.getGame());
@@ -152,7 +152,7 @@ void loop(){
     rotary.level();
 
   }
-}
+}*/
 }
 
 void interrupt(){

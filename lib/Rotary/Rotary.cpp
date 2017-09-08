@@ -105,6 +105,7 @@ void Rotary::refresh(){
   else{
     autoPause(false);
   }
+
   //Magic rotary section
   int val = digitalRead(pin1);
   if (val != last){
@@ -181,6 +182,7 @@ void Rotary::refresh(){
       }
       }
     }
+
     //Line Communication
 
       if ((getSteps() > getMaxSteps()) && (atMax == false)) {
@@ -206,10 +208,6 @@ void Rotary::refresh(){
           Line -> setModus(0);
         }
       }
-
-
-
-
 }
 
 //Activate Debug via Serial Output

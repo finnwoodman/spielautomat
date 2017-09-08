@@ -39,6 +39,8 @@ class LED_Wrapper
   void setArrows(int _arr0, int _arr1, int _arr2, int _arr3, int _arr4);
   bool arrowStatus();
 
+  void setBrightness(int _val);
+
   private:
     CRGB leds[NUM_LEDS];
     boolean debug = false;
