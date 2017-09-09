@@ -35,7 +35,7 @@ void AgeSelector::refresh(){
       Serial.print("AgeSelector::newage(): ");
       Serial.print(value1);
       Serial.print(" -> ");
-      Serial.println(getCat(value1));
+      Serial.println(getValue());
     }
   }
   if(debug == true){

@@ -34,7 +34,7 @@ void setup(){
   arcadeBus.add(32, 31, &Line, CRGB::Red);
   arcadeBus.add(30, 29, &Line, CRGB::Gold);
   arcadeBus.add(28, 27, &Line, CRGB::Lime);
-  arcadeBus.add(26, 25, &Line, CRGB::RoyalBlue);
+  arcadeBus.add(26, 25, &Line, CRGB::DarkBlue);
   arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
@@ -54,13 +54,13 @@ void setup(){
   //minAge
   minAge.setThreshold(2);
   minAge.setSteps(0 , 20 , 50, 130, 200, 350, 750, 1023);
-  minAge.setAges(30, 20, 15, 10, 7, 5, 3);
+  minAge.setAges(30, 20, 15, 12, 9, 7, 5);
   minAge.report(false);
 
   //maxAge
   maxAge.setThreshold(2);
   maxAge.setSteps(0 , 15 , 50, 120, 220, 400, 750, 1023);
-  maxAge.setAges(99, 60, 30, 20, 15, 10, 7);
+  maxAge.setAges(99, 60, 30, 20, 15, 12, 9);
   maxAge.report(false);
 
   //Voltmeter
@@ -81,13 +81,13 @@ void setup(){
   Line.addArrow(50, CRGB::Grey);
   Line.addArrow(73,CRGB::Grey);
   Line.setArrows(19, 26, 50, 73, 99);
-  Line.setWaveColors(CRGB::Amethyst, CRGB::Green);
+  Line.setWaveColors( CRGB::Lime, CRGB::Green);
 //  Line.setBrightness(255);
   Line.refresh();
 
   //Rotary
   rotary.autoDecreaseSteps(12);
-  rotary.setMax(2);
+  rotary.setMax(5 );
   rotary.report(false);
   rotary.attachVMeter(&vMeter, 60);
   rotary.attachLine(&Line);
@@ -102,8 +102,7 @@ void setup(){
   solenoid.adjust(20);
 
 
-  //Test Section
-  //arcadeBus.test(500);*/
+
 
 }
 
@@ -115,11 +114,12 @@ void loop(){
   minAge.refresh();
   maxAge.refresh();
   tPilot.refresh();
+  rotary.refresh();
   vMeter.refresh();
   solenoid.refresh();
   Line.line(rotary.getSteps(), rotary.getMaxSteps());
   Line.refresh();
-  rotary.refresh();
+
 
   if (Line.getModus() == 2) {
     rotary.autoPauseIgnore(false);
