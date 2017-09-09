@@ -45,7 +45,7 @@ void folderSelected(File selection) {
   imgNames = new String[table.getRowCount()];
   for (int i = 0; i < imgNames.length; i++) {
     imgNames[i] = table.getString(i,"Datei");
-    imgNames[i]+=".png";
+    //imgNames[i]+=".png";
   }
   }
 
@@ -96,7 +96,7 @@ void processImage(File image){  // Select and load image
   x = filename.lastIndexOf('/');
   if (x > 0) basename = filename.substring(x + 1); // Strip path
   else      basename = filename;
-  print(basename);
+  println(basename);
   if (csv==true){
   for (int j = 0; j < imgNames.length; j++) {
 

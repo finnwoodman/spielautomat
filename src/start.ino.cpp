@@ -1,3 +1,6 @@
+# 1 "/var/folders/38/phyg322s7tl085xcjvqqpwwh0000gn/T/tmpQRXAQm"
+#include <Arduino.h>
+# 1 "/Users/Fejngold/Documents/Arduino/Spielautomat/src/start.ino"
 
 #include <Rotary.h>
 #include <ArcadeCollector.h>
@@ -13,7 +16,7 @@
 
 
 GameData Games(130,12);
-//Hardware
+
 LED_Wrapper Line;
 ArcadeCollector arcadeBus(5);
 RotarySwitch rPlayers(A8, 10);
@@ -25,12 +28,13 @@ Voltmeter vMeter(A2);
 CoinAcceptor Coin;
 Rotary rotary(33,34);
 SolSound solenoid(A3);
-
-
-
+void setup();
+void loop();
+void interrupt();
+#line 31 "/Users/Fejngold/Documents/Arduino/Spielautomat/src/start.ino"
 void setup(){
   Serial.begin(9600);
-    //Arcadebus
+
   arcadeBus.add(32, 31, &Line, CRGB::Red);
   arcadeBus.add(30, 29, &Line, CRGB::Gold);
   arcadeBus.add(28, 27, &Line, CRGB::Lime);
@@ -39,38 +43,38 @@ void setup(){
   arcadeBus.setBlink(100,5);
   arcadeBus.report(false);
 
-  //rPlayer
+
   rPlayers.report(false);
   int _players [] = {3,2,1,10,9,8,7,6,5,4};
   rPlayers.addMapping(_players);
   rPlayers.addCorrector(20);
 
-  //rDuration
+
   rDuration.report(false);
   int _duration [] = {45,30,20,15,10,5,3,1,0,60};
   rDuration.addCorrector(20);
   rDuration.addMapping(_duration);
 
-  //minAge
+
   minAge.setThreshold(2);
   minAge.setSteps(0 , 20 , 50, 130, 200, 350, 750, 1023);
   minAge.setAges(30, 20, 15, 10, 7, 5, 3);
   minAge.report(false);
 
-  //maxAge
+
   maxAge.setThreshold(2);
   maxAge.setSteps(0 , 15 , 50, 120, 220, 400, 750, 1023);
   maxAge.setAges(99, 60, 30, 20, 15, 10, 7);
   maxAge.report(false);
 
-  //Voltmeter
+
   vMeter.report(false);
 
-  //Coins
+
   Coin.report(false);
   attachInterrupt(10, interrupt ,RISING);
 
-  //LED
+
   Line.counterClockwise();
   Line.setColor(CRGB::Blue);
 
@@ -82,10 +86,10 @@ void setup(){
   Line.addArrow(73,CRGB::Grey);
   Line.setArrows(19, 26, 50, 73, 99);
   Line.setWaveColors(CRGB::Amethyst, CRGB::Green);
-//  Line.setBrightness(255);
+
   Line.refresh();
 
-  //Rotary
+
   rotary.autoDecreaseSteps(12);
   rotary.setMax(2);
   rotary.report(false);
@@ -95,15 +99,15 @@ void setup(){
 
 
 
-  //GameData
+
   Games.report(true);
   Games.init();
   Games.grab();
   solenoid.adjust(20);
 
 
-  //Test Section
-  //arcadeBus.test(500);*/
+
+
 
 }
 
