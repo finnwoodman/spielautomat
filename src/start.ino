@@ -8,7 +8,7 @@
 #include <RotarySwitch.h>
 #include <SolSound.h>
 #include <Toggle.h>
-#include <LED_Wrapper.h>*/
+#include <LED_Wrapper.h>
 #include <GameData.h>
 
 
@@ -37,17 +37,17 @@ void setup(){
   arcadeBus.add(26, 25, &Line, CRGB::RoyalBlue);
   arcadeBus.add(24,12, &Line, CRGB::White);
   arcadeBus.setBlink(100,5);
-  arcadeBus.report(true);
+  arcadeBus.report(false);
 
   //rPlayer
   rPlayers.report(false);
-  int _players [] = {10,9,8,7,6,5,4,3,2,1};
+  int _players [] = {3,2,1,10,9,8,7,6,5,4};
   rPlayers.addMapping(_players);
   rPlayers.addCorrector(20);
 
   //rDuration
   rDuration.report(false);
-  int _duration [] = {60,45,30,20,15,10,5,3,1,0};
+  int _duration [] = {45,30,20,15,10,5,3,1,0,60};
   rDuration.addCorrector(20);
   rDuration.addMapping(_duration);
 
@@ -82,12 +82,12 @@ void setup(){
   Line.addArrow(73,CRGB::Grey);
   Line.setArrows(19, 26, 50, 73, 99);
   Line.setWaveColors(CRGB::Amethyst, CRGB::Green);
-  Line.setBrightness(255);
+//  Line.setBrightness(255);
   Line.refresh();
 
   //Rotary
   rotary.autoDecreaseSteps(12);
-  rotary.setMax(15);
+  rotary.setMax(10);
   rotary.report(false);
   rotary.attachVMeter(&vMeter, 60);
   rotary.attachLine(&Line);
@@ -96,7 +96,7 @@ void setup(){
 
 
   //GameData
-  Games.report(false);
+  Games.report(true);
   Games.init();
   Games.grab();
 
@@ -128,7 +128,7 @@ void loop(){
 
   if (Line.getModus() == 1) {
     if (Coin.getBudget(0.2) >= true) {
-/*    Serial.println("++++ GAME BEGIN++++");
+    Serial.println("++++ GAME BEGIN++++");
     Serial.print("Personen: " );
     Serial.println(rPlayers.getMapping());
     Serial.print("Minuten: " );
@@ -146,7 +146,7 @@ void loop(){
     Serial.println("++++ GAME END ++++");
     Games.search(rPlayers.getPosition(), rDuration.getMapping(),minAge.getValue(),maxAge.getValue(),arcadeBus.getActive()+1, tPilot.get());
     Serial.println("++++ GAME IS++++");
-    Serial.println(Games.getGame());*/
+    Serial.println(Games.getGame());
     solenoid.bell();
     solenoid.refresh();
     Games.print(Games.getGame());
